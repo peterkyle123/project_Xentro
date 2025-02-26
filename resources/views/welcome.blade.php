@@ -19,7 +19,6 @@
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Properties</a>
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">About Us</a>
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
-                <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Login</a>
             </nav>
 
             <!-- Mobile Menu Button -->
@@ -35,8 +34,7 @@
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Home</a>
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Properties</a>
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">About Us</a>
-            <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>
-            <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Login</a>
+            <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>      
         </div>
     </header>
 
