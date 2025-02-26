@@ -22,5 +22,6 @@ class Listing extends Model
         'bathrooms',
         'area',
         'status',
+        'image',
     ];
 }

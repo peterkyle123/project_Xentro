@@ -31,20 +31,29 @@ class ListingController extends Controller
             'description' => 'nullable|string',
             'type' => 'required|string|max:50',
             'price' => 'nullable|numeric',
-           'address' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
-            'zip' => 'required|string|max:20', // Zip codes can be alphanumeric
-            'bedrooms' => 'nullable|integer|min:0', // Bedrooms should be a non-negative integer
-            'bathrooms' => 'nullable|numeric|min:0', // Bathrooms can be fractional (e.g., 1.5)
-            'area' => 'nullable|numeric|min:0', // Area should be a non-negative number
-            'status' => 'required|string|max:50', // Status should be a string
-
-            // Add other validation rules as needed
+            'zip' => 'required|string|max:20',
+            'bedrooms' => 'nullable|integer|min:0',
+            'bathrooms' => 'nullable|numeric|min:0',
+            'area' => 'nullable|numeric|min:0',
+            'status' => 'required|string|max:50',
+            'image' => 'required|string|max:50', // Max size 2MB
         ]);
-
+    
+        // Check if the image file is present in the request
+        if ($request->hasFile('image')) {
+            // dd($request->file('image')); // Uncomment this for debugging to inspect the file
+            
+            // Store the image in the 'public/images' folder under the 'public' disk
+            $imagePath = $request->file('image')->store('images', 'public');
+            
+            // Store the image path (relative to the public disk)
+            $validatedData['image'] = $imagePath;
+        }
         Listing::create($validatedData);
-
+    
         return redirect()->route('admin.listings.index')->with('success', 'Listing created successfully.');
     }
 
@@ -72,7 +81,9 @@ class ListingController extends Controller
             'bedrooms' => 'nullable|integer|min:0', // Bedrooms should be a non-negative integer
             'bathrooms' => 'nullable|numeric|min:0', // Bathrooms can be fractional (e.g., 1.5)
             'area' => 'nullable|numeric|min:0', // Area should be a non-negative number
-            'status' => 'required|string|max:50', // Status should be a string
+            'status' => 'required|string|max:50',
+            'image' => 'required|string|max:50',
+             // Status should be a string
             // Add other validation rules as needed
         ]);
 

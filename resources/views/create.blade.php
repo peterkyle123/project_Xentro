@@ -95,8 +95,9 @@
             </div>
             <div class="mb-4">
                 <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image</label>
-                <input type="file" name="image" id="image" class="w-full border rounded py-2 px-3">
+                <input type="file" name="image" id="image" class="w-full border rounded py-2 px-3" accept="image/*">
             </div>
+
 
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Create Listing</button>
         </form>
