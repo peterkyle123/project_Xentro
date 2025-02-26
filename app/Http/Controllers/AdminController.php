@@ -22,4 +22,10 @@ class AdminController extends Controller
 
         return back()->with('error', 'Invalid username or password.');
     }
+    public function logout(Request $request)
+    {
+        $request->session()->forget('admin_logged_in');
+
+        return redirect('/');
+    }
 }
