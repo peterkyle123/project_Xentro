@@ -6,19 +6,22 @@
     <title>Your Real Estate - Find Your Dream Home</title>
     @vite('resources/css/app.css')
 </head>
-<header class="bg-white shadow-md">
+ <!-- Header -->
+ <body class="bg-gray-100">
+ <header class="bg-white shadow-md relative">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <!-- Logo -->
             <a href="#" class="text-2xl font-bold text-blue-600">Your Real Estate</a>
-            
-            <!-- Navigation Menu -->
+
+            <!-- Navigation Menu (Desktop) -->
             <nav class="hidden md:flex space-x-6">
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Properties</a>
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">About Us</a>
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
+                <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Login</a>
             </nav>
-            
+
             <!-- Mobile Menu Button -->
             <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -28,14 +31,15 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md absolute w-full left-0 top-16">
+        <div id="mobile-menu" class="hidden flex flex-col bg-white shadow-md absolute w-full left-0 top-full z-50">
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Home</a>
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Properties</a>
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">About Us</a>
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>
+            <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Login</a>
         </div>
     </header>
-<body class="bg-gray-100">
+
 
     <section class="relative h-[600px] bg-cover bg-center" style="background-image: url('{{ asset('images/home.jpg') }}');">
         <div class="absolute inset-0 bg-black opacity-50"></div>
@@ -122,8 +126,19 @@
         </div>
     </footer>
     <script>
-         document.getElementById('menu-toggle').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+       document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuToggle.addEventListener('click', function () {
+                if (mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.remove('hidden');
+                    mobileMenu.classList.add('flex');
+                } else {
+                    mobileMenu.classList.remove('flex');
+                    mobileMenu.classList.add('hidden');
+                }
+            });
         });
     </script>
 
