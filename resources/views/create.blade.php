@@ -66,7 +66,7 @@
                 <label for="type" class="block text-gray-700 text-sm font-bold mb-2">Type</label>
                 <select name="type" id="type" class="w-full border rounded py-2 px-3">
                     <option value="sale">Sale</option>
-                    <option value="Lease">Lease</option>
+                    <option value="lease">Lease</option>
                     <option value="rent">Rent</option>
                 </select>
             </div>

@@ -103,7 +103,10 @@ class ListingController extends Controller
             if ($request->housing_type !== 'Other') {
                 $validatedData['custom_housing_type'] = null;
             }
-
+            if ($request->hasFile('image')) {
+                $imagePath = $request->file('image')->store('images', 'public');
+                $validatedData['image'] = $imagePath;
+            }
         $listing->update($validatedData);
 
         return redirect()->route('admin.listings.index')->with('success', 'Listing updated successfully.');
