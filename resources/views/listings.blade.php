@@ -19,9 +19,10 @@
         <table class="min-w-full bg-white border border-gray-300">
     <thead>
         <tr>
-            <th class="py-2 px-4 border-b">ID</th>
             <th class="py-2 px-4 border-b">Title</th>
             <th class="py-2 px-4 border-b">Type</th>
+            <th class="py-2 px-4 border-b">Category</th>
+            <th class="py-2 px-4 border-b">Housing Type (if housing)</th>
             <th class="py-2 px-4 border-b">Price</th>
             <th class="py-2 px-4 border-b">Address</th>
             <th class="py-2 px-4 border-b">Location</th> <th class="py-2 px-4 border-b">Zip</th>
@@ -35,9 +36,13 @@
     <tbody>
         @foreach ($listings as $listing)
             <tr>
-                <td class="py-2 px-4 border-b">{{ $listing->id }}</td>
                 <td class="py-2 px-4 border-b">{{ $listing->title }}</td>
                 <td class="py-2 px-4 border-b">{{ $listing->type }}</td>
+                <td class="py-2 px-4 border-b">{{ $listing->category }}</td>
+                <td class="py-2 px-4 border-b">
+                    {{ $listing->housing_type === 'Other' ? $listing->custom_housing_type : $listing->housing_type }}
+                </td>
+
                 <td class="py-2 px-4 border-b">{{ $listing->price }}</td>
                 <td class="py-2 px-4 border-b">{{ $listing->address }}</td>
                 <td class="py-2 px-4 border-b">{{ $listing->city }}, {{ $listing->state }}</td> <td class="py-2 px-4 border-b">{{ $listing->zip }}</td>
@@ -63,5 +68,6 @@
             {{ $listings->links() }}
         </div>
     </div>
+ 
 </body>
 </html>

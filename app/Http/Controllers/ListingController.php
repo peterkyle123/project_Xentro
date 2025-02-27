@@ -10,6 +10,8 @@ class ListingController extends Controller
 {
     public function index()
     {
+        $listings = Listing::select('id', 'title', 'type', 'category', 'housing_type','custom_housing_type', 'price', 'address', 'city', 'state', 'zip', 'bedrooms', 'bathrooms', 'area', 'status')
+        ->paginate(10);
         if (!session('admin_logged_in')) {
             return redirect()->route('admin.login');
         }
@@ -29,6 +31,9 @@ class ListingController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category' => 'required|string|max:50',
+            'housing_type' => 'nullable|string|max:50',
+            'custom_housing_type' => 'nullable|string|max:50',
             'type' => 'required|string|max:50',
             'price' => 'nullable|numeric',
             'address' => 'required|string|max:255',
@@ -39,9 +44,14 @@ class ListingController extends Controller
             'bathrooms' => 'nullable|numeric|min:0',
             'area' => 'nullable|numeric|min:0',
             'status' => 'required|string|max:50',
-            'image' => 'required|string|max:50', // Max size 2MB
+            'image' => 'required|image|max:5000', // Max size 2MB
         ]);
-    
+
+
+    // If housing_type is not "Other", clear custom_housing_type
+    if ($request->housing_type !== 'Other') {
+        $validatedData['custom_housing_type'] = null;
+    }
         // Check if the image file is present in the request
         if ($request->hasFile('image')) {
             // dd($request->file('image')); // Uncomment this for debugging to inspect the file
@@ -72,6 +82,9 @@ class ListingController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category' => 'required|string|max:50',
+            'housing_type' => 'nullable|string|max:50',
+            'custom_housing_type' => 'nullable|string|max:50',
             'type' => 'required|string|max:50',
             'price' => 'nullable|numeric',
             'address' => 'required|string|max:255',
@@ -82,10 +95,14 @@ class ListingController extends Controller
             'bathrooms' => 'nullable|numeric|min:0', // Bathrooms can be fractional (e.g., 1.5)
             'area' => 'nullable|numeric|min:0', // Area should be a non-negative number
             'status' => 'required|string|max:50',
-            'image' => 'required|string|max:50',
+            'image' => 'required|image|max:5000',
              // Status should be a string
             // Add other validation rules as needed
         ]);
+           // If housing_type is not "Other", clear custom_housing_type
+            if ($request->housing_type !== 'Other') {
+                $validatedData['custom_housing_type'] = null;
+            }
 
         $listing->update($validatedData);
 

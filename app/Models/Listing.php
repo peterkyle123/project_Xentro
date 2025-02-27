@@ -12,6 +12,9 @@ class Listing extends Model
     protected $fillable = [
         'title',
         'description',
+        'category',
+        'housing_type',
+        'custom_housing_type', // Add this field
         'type',
         'price',
         'address',
