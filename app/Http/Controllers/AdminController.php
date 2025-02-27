@@ -43,14 +43,23 @@ class AdminController extends Controller
 
         $validatedData = $request->validate([
             'username' => 'required|string|max:255|unique:admin_login,username,' . $admin->id,
+            'email' => 'nullable|email|unique:admin_login,email,' . $admin->id,
             'password' => 'nullable|string|min:8|confirmed',
+            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
         ]);
 
         $admin->username = $validatedData['username'];
+        $admin->email = $validatedData['email'];
 
         if ($request->filled('password')) {
             $admin->password = Hash::make($validatedData['password']);
         }
+        if ($request->hasFile('profile_pic')) {
+            $imagePath = $request->file('profile_pic')->store('profile_pics', 'public');
+            $admin->profile_pic = $imagePath;
+        }
+    
 
         $admin->save();
 

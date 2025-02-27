@@ -122,4 +122,15 @@ class ListingController extends Controller
 
         return redirect()->route('admin.listings.index')->with('success', 'Listing deleted successfully.');
     }
+    // user
+    public function userIndex()
+{
+    $listings = Listing::paginate(9); // Or another number of listings per page
+    return view('user_listings.index', compact('listings'));
+}
+
+public function userShow(Listing $listing)
+{
+    return view('user_listings.show', compact('listing'));
+}
 }

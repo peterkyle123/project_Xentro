@@ -18,15 +18,22 @@
             <span class="block sm:inline">{{ session('success') }}</span>
         </div>
     @endif
-
-    <form action="{{ route('admin.update') }}" method="POST">
-        @csrf
-        @method('PUT')
+    <form action="{{ route('admin.update') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
 
         <div class="mb-4">
             <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
             <input type="text" name="username" id="username" class="w-full border rounded py-2 px-3" value="{{ $admin->username }}">
             @error('username')
+                <p class="text-red-500 text-xs italic">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+            <input type="email" name="email" id="email" class="w-full border rounded py-2 px-3" value="{{ $admin->email }}">
+            @error('email')
                 <p class="text-red-500 text-xs italic">{{ $message }}</p>
             @enderror
         </div>
@@ -42,6 +49,14 @@
         <div class="mb-4">
             <label for="password_confirmation" class="block text-gray-700 text-sm font-bold mb-2">Confirm New Password</label>
             <input type="password" name="password_confirmation" id="password_confirmation" class="w-full border rounded py-2 px-3">
+        </div>
+
+        <div class="mb-4">
+            <label for="profile_pic" class="block text-gray-700 text-sm font-bold mb-2">Profile Picture</label>
+            <input type="file" name="profile_pic" id="profile_pic" class="w-full border rounded py-2 px-3">
+            @if($admin->profile_pic)
+                <img src="{{ asset('storage/' . $admin->profile_pic) }}" alt="Profile Picture" class="mt-2" style="max-height: 100px;">
+            @endif
         </div>
 
         <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Update Account</button>

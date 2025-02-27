@@ -28,6 +28,9 @@
                     <li class="mb-4">
                         <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-300">Users</a>
                     </li>
+                    <li class="mb-4">
+                        <a href="/admin-edit" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-300">Account</a>
+                    </li>
                 </ul>
             </nav>
 

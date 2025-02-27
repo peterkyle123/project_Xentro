@@ -40,3 +40,5 @@ Route::prefix('admin')->group(function () {
 });
 Route::get('/admin-edit', [AdminController::class, 'edit'])->name('admin-edit');
 Route::put('/admin/update', [AdminController::class, 'update'])->name('admin.update');
+Route::get('/user-listings1', [ListingController::class, 'userIndex'])->name('user_listings.index');
+Route::get('/user-listings/{listing}', [ListingController::class, 'userShow'])->name('user_listings.show');
