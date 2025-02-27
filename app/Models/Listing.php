@@ -26,5 +26,10 @@ class Listing extends Model
         'area',
         'status',
         'image',
+        'latitude',
+        'longitude',
+        'contact_name',
+        'contact_email',
+        'contact_phone',
     ];
 }

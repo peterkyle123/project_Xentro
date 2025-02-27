@@ -38,3 +38,5 @@ Route::prefix('admin')->group(function () {
     Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('admin.listings.update');
     Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->name('admin.listings.destroy');
 });
+Route::get('/admin-edit', [AdminController::class, 'edit'])->name('admin-edit');
+Route::put('/admin/update', [AdminController::class, 'update'])->name('admin.update');

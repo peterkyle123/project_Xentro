@@ -28,4 +28,33 @@ class AdminController extends Controller
 
         return redirect('/');
     }
+    public function edit()
+    {
+        if (!session('admin_logged_in')) {
+            return redirect('/admin/login'); // Redirect if not logged in
+        }
+        $admin = Admin::first(); // Assuming only one admin user, or adjust as needed.
+        return view('admin-edit', compact('admin'));
+    }
+
+    public function update(Request $request)
+    {
+        $admin = Admin::first(); // Assuming only one admin user, or adjust as needed.
+
+        $validatedData = $request->validate([
+            'username' => 'required|string|max:255|unique:admin_login,username,' . $admin->id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $admin->username = $validatedData['username'];
+
+        if ($request->filled('password')) {
+            $admin->password = Hash::make($validatedData['password']);
+        }
+
+        $admin->save();
+
+        return redirect()->route('admin-edit')->with('success', 'Admin account updated successfully.');
+    }
 }
+

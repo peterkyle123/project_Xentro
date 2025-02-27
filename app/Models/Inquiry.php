@@ -18,7 +18,7 @@ class Inquiry extends Model
         'listing_id',
     ];
 
-    public function listing()
+    public function listing(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Listing::class);
     }

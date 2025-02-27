@@ -44,7 +44,9 @@ class ListingController extends Controller
             'bathrooms' => 'nullable|numeric|min:0',
             'area' => 'nullable|numeric|min:0',
             'status' => 'required|string|max:50',
-            'image' => 'required|image|max:5000', // Max size 2MB
+            'image' => 'required|image|max:5000', 
+            'latitude' => 'nullable|numeric', // Added validation for latitude
+            'longitude' => 'nullable|numeric',
         ]);
 
 
@@ -96,6 +98,8 @@ class ListingController extends Controller
             'area' => 'nullable|numeric|min:0', // Area should be a non-negative number
             'status' => 'required|string|max:50',
             'image' => 'required|image|max:5000',
+            'latitude' => 'nullable|numeric', // Added validation for latitude
+            'longitude' => 'nullable|numeric', 
              // Status should be a string
             // Add other validation rules as needed
         ]);

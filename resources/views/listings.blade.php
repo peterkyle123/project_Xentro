@@ -41,8 +41,11 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <a href="{{ route('admin.listings.show', $listing->id) }}" class="inline-block bg-blue-100 hover:bg-blue-200 text-blue-700 py-2 px-6 rounded-full font-semibold transition-colors duration-300">
-                                Find Out More
+                            <a href="{{ route('admin.listings.show', $listing->id) }}" class="inline-flex items-center bg-blue-100 hover:bg-blue-200 text-blue-700 py-2 px-6 rounded-full font-semibold transition-colors duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                View Full Details
                             </a>
                         </div>
                         <div class="mt-4 flex justify-around">

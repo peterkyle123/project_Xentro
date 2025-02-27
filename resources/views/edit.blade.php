@@ -128,10 +128,38 @@
                         <img src="{{ asset('storage/' . $listing->image) }}" alt="Current Image" class="mt-2" style="max-width: 200px;">
                     @endif
             </div>
+            <div class="mb-4">
+                <label for="latitude" class="block text-gray-700 text-sm font-bold mb-2">Latitude</label>
+                <input type="text" name="latitude" id="latitude" class="w-full border rounded py-2 px-3" value="{{ $listing->latitude }}">
+            </div>
+
+            <div class="mb-4">
+                <label for="longitude" class="block text-gray-700 text-sm font-bold mb-2">Longitude</label>
+                <input type="text" name="longitude" id="longitude" class="w-full border rounded py-2 px-3" value="{{ $listing->longitude }}">
+            </div>
+
+            <div class="mb-4">
+                <a href="#" id="google-maps-link" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">View on Google Maps</a>
+            </div>
+
 
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Update Listing</button>
 <script>
+    //  maps
+    document.getElementById('latitude').addEventListener('input', updateGoogleMapsLink);
+    document.getElementById('longitude').addEventListener('input', updateGoogleMapsLink);
 
+function updateGoogleMapsLink() {
+    const latitude = document.getElementById('latitude').value;
+    const longitude = document.getElementById('longitude').value;
+    const googleMapsLink = document.getElementById('google-maps-link');
+
+    if (latitude && longitude) {
+        googleMapsLink.href = `https://www.google.com/maps/place/${latitude},${longitude}`;
+    } else {
+        googleMapsLink.href = '#'; // Or a default URL
+    }
+}
    document.addEventListener("DOMContentLoaded", function () {
         const categorySelect = document.getElementById("category");
         const housingTypeWrapper = document.getElementById("housing-type-wrapper");
