@@ -28,7 +28,10 @@
         <p class="mb-2"><strong>Type:</strong> {{ $listing->type }}</p>
         <p class="mb-2"><strong>Status:</strong> {{ $listing->status }}</p>
         <p class="mb-2"><strong>Description:</strong> {{ $listing->description }}</p>
+
         <a href="{{ route('user_listings.index') }}" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Back to Listings</a>
+
+        <a href="{{ route('inquiries.create', $listing->id) }}" class="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded">Inquire About This Property</a>
     </div>
 </body>
 </html>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InquiryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LogoutController;
 
@@ -42,3 +43,5 @@ Route::get('/admin-edit', [AdminController::class, 'edit'])->name('admin-edit');
 Route::put('/admin/update', [AdminController::class, 'update'])->name('admin.update');
 Route::get('/user-listings1', [ListingController::class, 'userIndex'])->name('user_listings.index');
 Route::get('/user-listings/{listing}', [ListingController::class, 'userShow'])->name('user_listings.show');
+Route::get('/inquiries/{listing}', [InquiryController::class, 'create'])->name('inquiries.create');
+Route::post('/inquiries/{listing}', [InquiryController::class, 'store'])->name('inquiries.store');
