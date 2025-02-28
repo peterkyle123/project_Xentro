@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ListingController extends Controller
 {
     public function index()
     {
         $listings = Listing::select('id', 'title', 'type', 'category', 'housing_type','custom_housing_type', 'price', 'address', 'city', 'state', 'zip', 'bedrooms', 'bathrooms', 'area', 'status')
-        ->paginate(10);
+        ->paginate(6);
         if (!session('admin_logged_in')) {
             return redirect()->route('admin.login');
         }
-        $listings = Listing::paginate(10);
+        $listings = Listing::paginate(6);
         return view('listings', compact('listings'));
     }
 
@@ -100,22 +101,29 @@ class ListingController extends Controller
             'bathrooms' => 'nullable|numeric|min:0', // Bathrooms can be fractional (e.g., 1.5)
             'area' => 'nullable|numeric|min:0', // Area should be a non-negative number
             'status' => 'required|string|max:50',
-            'image' => 'required|image|max:5000',
-            'latitude' => 'nullable|numeric', 
-            'longitude' => 'nullable|numeric', 
-            'contact_name' => 'required|string|max:255', 
-            'contact_email' => 'required|email|max:255', 
-            'contact_phone' => 'nullable|string|max:20', 
+           'image' => 'nullable|image|max:5000',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
+        'contact_name' => 'nullable|string|max:255', // Make nullable
+        'contact_email' => 'nullable|email|max:255', // Make nullable
+        'contact_phone' => 'nullable|string|max:20', // Make nullable
 
         ]);
            // If housing_type is not "Other", clear custom_housing_type
             if ($request->housing_type !== 'Other') {
                 $validatedData['custom_housing_type'] = null;
             }
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('images', 'public');
-                $validatedData['image'] = $imagePath;
+           // Handle image upload only if a new image is provided
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($listing->image) {
+                Storage::disk('public')->delete($listing->image);
             }
+
+        $imagePath = $request->file('image')->store('listings', 'public');
+        $listing->image = $imagePath;
+        $listing->save(); // Save the listing again to store the image path
+    }
         $listing->update($validatedData);
 
         return redirect()->route('admin.listings.index')->with('success', 'Listing updated successfully.');
@@ -131,7 +139,7 @@ class ListingController extends Controller
     public function userIndex()
 {
     $listings = Listing::paginate(9); // Or another number of listings per page
-    return view('user_listings  ', compact('listings'));
+    return view('user_listings.index  ', compact('listings'));
 }
 
 public function userShow(Listing $listing)

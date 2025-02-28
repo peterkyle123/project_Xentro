@@ -162,12 +162,28 @@
         <div class="mb-4">
             <a href="#" id="google-maps-link" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">View on Google Maps</a>
         </div>
+        <div class="mb-4 flex justify-center space-x-4">
+            <!-- Create Listing Button -->
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                Create Listing
+            </button>
 
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">Create Listing</button>
+            <!-- Back to Home Button -->
+            <a href="/admin/dashboard">
+                <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+                    Back to Home
+                </button>
+            </a>
+        </div>
+
         </form>
     </div>
 
     <script>
+        // button
+                document.querySelector('form').addEventListener('submit', function() {
+            document.querySelector('button[type="submit"]').disabled = true;
+        });
         // maps
         document.getElementById('latitude').addEventListener('input', updateGoogleMapsLink);
     document.getElementById('longitude').addEventListener('input', updateGoogleMapsLink);
