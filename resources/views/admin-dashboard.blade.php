@@ -17,8 +17,7 @@
             <nav class="flex items-center space-x-4">
                 <a href="/" class="hover:text-gray-300">Website</a>
                 <a href="/admin/listings" class="hover:text-gray-300">Listings</a>
-                <a href="#" class="hover:text-gray-300">Inquiries</a>
-                <a href="#" class="hover:text-gray-300">Users</a>
+                <a href="/admin/inquiries" class="hover:text-gray-300">Inquiries</a>
                 <a href="/admin-edit" class="hover:text-gray-300">Account</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

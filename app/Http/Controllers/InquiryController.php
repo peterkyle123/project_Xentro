@@ -29,4 +29,21 @@ class InquiryController extends Controller
 
         return redirect()->route('inquiries.create', $listing->id)->with('success', 'Your inquiry has been submitted.');
     }
+    // admin
+    public function viewInquiries()
+    {
+        $inquiries = Inquiry::with('listing')->paginate(10); // Adjust pagination as needed
+        return view('view_inqueries', compact('inquiries'));
+    }
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'inquiries' => 'required|array',
+            'inquiries.*' => 'exists:inquiries,id',
+        ]);
+    
+        Inquiry::whereIn('id', $request->inquiries)->delete();
+    
+        return redirect()->back()->with('success', 'Selected inquiries deleted successfully!');
+    }
 }

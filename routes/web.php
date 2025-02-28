@@ -45,3 +45,5 @@ Route::get('/user-listings1', [ListingController::class, 'userIndex'])->name('us
 Route::get('/user-listings/{listing}', [ListingController::class, 'userShow'])->name('user_listings.show');
 Route::get('/inquiries/{listing}', [InquiryController::class, 'create'])->name('inquiries.create');
 Route::post('/inquiries/{listing}', [InquiryController::class, 'store'])->name('inquiries.store');
+Route::get('/admin/inquiries', [InquiryController::class, 'viewInquiries'])->name('admin.inquiries.index');
+Route::delete('/admin/inquiries/bulk-delete', [InquiryController::class, 'bulkDelete'])->name('admin.inquiries.bulkDelete');
