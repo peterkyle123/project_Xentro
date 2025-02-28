@@ -50,51 +50,31 @@
     </section>
 
     <section class="py-16">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-semibold text-center mb-8">Featured Properties</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-semibold text-center mb-8">Featured Properties</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach ($featuredListings as $listing)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-                    <a href="#">
-                        <img src="{{ asset('images/property1.jpg') }}" alt="Property 1" class="w-full h-64 object-cover">
+                    <a href="{{ route('admin.listings.show', $listing->id) }}">
+                        @if ($listing->image)
+                            <img src="{{ asset('storage/' . $listing->image) }}" alt="{{ $listing->title }}" class="w-full h-64 object-cover">
+                        @else
+                            <img src="{{ asset('images/default-property.jpg') }}" alt="Default Property" class="w-full h-64 object-cover">
+                        @endif
                     </a>
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Luxury Villa in Cebu</h3>
-                        <p class="text-gray-600 mb-4">4 Bedrooms, 3 Bathrooms, Pool, and Garden.</p>
+                        <h3 class="text-xl font-semibold mb-2">{{ $listing->title }}</h3>
+                        <p class="text-gray-600 mb-4">{{ Str::limit($listing->description, 100) }}</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-lg font-bold text-blue-500">$500,000</span>
-                            <a href="#" class="text-blue-500 hover:text-blue-600">View Details</a>
+                            <span class="text-lg font-bold text-blue-500">₱{{ number_format($listing->price) }}</span>
+                            <a href="{{ route('admin.listings.show', $listing->id) }}" class="text-blue-500 hover:text-blue-600">View Details</a>
                         </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-                    <a href="#">
-                        <img src="{{ asset('images/property2.jpg') }}" alt="Property 2" class="w-full h-64 object-cover">
-                    </a>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Modern Apartment in City Center</h3>
-                        <p class="text-gray-600 mb-4">2 Bedrooms, Balcony, and City View.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-lg font-bold text-blue-500">$300,000</span>
-                            <a href="#" class="text-blue-500 hover:text-blue-600">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-                    <a href="#">
-                        <img src="{{ asset('images/property3.jpg') }}" alt="Property 3" class="w-full h-64 object-cover">
-                    </a>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Family Home with Large Yard</h3>
-                        <p class="text-gray-600 mb-4">3 Bedrooms, Spacious Living Area, and Garden.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-lg font-bold text-blue-500">$400,000</span>
-                            <a href="#" class="text-blue-500 hover:text-blue-600">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
-    </section>
+    </div>
+</section>
 
     <section class="bg-gray-200 py-16">
         <div class="container mx-auto px-4">

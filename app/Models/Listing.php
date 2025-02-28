@@ -31,5 +31,6 @@ class Listing extends Model
         'contact_name',
         'contact_email',
         'contact_phone',
+        'is_featured',
     ];
 }

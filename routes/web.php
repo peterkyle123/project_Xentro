@@ -1,5 +1,5 @@
 <?php
-
+use App\Models\Listing;
 use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LogoutController;
 
 Route::get('/', function () {
-    return view('welcome');
+    $featuredListings = Listing::where('is_featured', true)->get();
+    // ... other logic
+    return view('welcome', compact('featuredListings'));
 });
 
 // Admin Login
@@ -47,3 +49,4 @@ Route::get('/inquiries/{listing}', [InquiryController::class, 'create'])->name('
 Route::post('/inquiries/{listing}', [InquiryController::class, 'store'])->name('inquiries.store');
 Route::get('/admin/inquiries', [InquiryController::class, 'viewInquiries'])->name('admin.inquiries.index');
 Route::delete('/admin/inquiries/bulk-delete', [InquiryController::class, 'bulkDelete'])->name('admin.inquiries.bulkDelete');
+Route::post('/admin/listings/{listing}/toggle-featured', [ListingController::class, 'toggleFeatured'])->name('admin.listings.toggleFeatured');

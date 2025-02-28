@@ -206,4 +206,11 @@ public function userShow(Listing $listing)
 {
     return view('user_listings.show', compact('listing'));
 }
+public function toggleFeatured(Listing $listing)
+{
+    $listing->is_featured = !$listing->is_featured;
+    $listing->save();
+
+    return redirect()->route('admin.listings.index')->with('success', 'Featured status updated.');
+}
 }

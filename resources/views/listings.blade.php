@@ -73,13 +73,22 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Are you sure?')">Delete</button>
+                            
                             </form>
+                            <form action="{{ route('admin.listings.toggleFeatured', $listing->id) }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="{{ $listing->is_featured ? 'text-yellow-600 hover:underline' : 'text-blue-600 hover:underline' }}">
+                                {{ $listing->is_featured ? 'Remove from Featured' : 'Add to Featured' }}
+                            </button>
+                        </form>
                         </div>
                     </div>
                 </div>
+                
             @endforeach
+            
         </div>
-
+        
         <div class="mt-6">
             {{ $listings->links() }}
         </div>
