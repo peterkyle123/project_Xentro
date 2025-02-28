@@ -64,13 +64,19 @@
           <p class="mb-4 text-lg"><strong class="font-medium text-gray-800">Updated At:</strong> {{ $listing->updated_at }}</p>
         </div>
       </div>
-       {{-- Map (if location data) --}}
-       <div class="mb-10">
-                {{-- Implement map here (e.g., Google Maps) --}}
-                <div class="h-80 bg-gray-200 rounded-lg">
-                    Map Placeholder
-                </div>
-            </div>
+   
+     {{-- Map (if location data) --}}
+      <div class="mb-10">
+          <p class="mb-4 text-lg">
+              <strong class="font-medium text-gray-800">Latitude:</strong> <span id="display-latitude">{{ $listing->latitude }}</span>
+          </p>
+          <p class="mb-4 text-lg">
+              <strong class="font-medium text-gray-800">Longitude:</strong> <span id="display-longitude">{{ $listing->longitude }}</span>
+          </p>
+      </div>
+      <div class="mb-4">
+          <a href="#" id="google-maps-link" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">View on Google Maps</a>
+      </div>
 
             {{-- Contact/Inquiry Form --}}
             <div class="mb-10">
@@ -96,5 +102,19 @@
       </div>
     </div>
   </div>
+  <script>
+     // maps
+     document.addEventListener('DOMContentLoaded', function() {
+        const latitude = document.getElementById('display-latitude').textContent;
+        const longitude = document.getElementById('display-longitude').textContent;
+        const googleMapsLink = document.getElementById('google-maps-link');
+
+        if (latitude && longitude) {
+            googleMapsLink.href = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+        } else {
+            googleMapsLink.href = '#'; // Or a default URL
+        }
+    });
+  </script>
 </body>
 </html>

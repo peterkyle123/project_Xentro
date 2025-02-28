@@ -14,6 +14,14 @@
 
         <form action="{{ route('admin.listings.store') }}" method="POST" enctype="multipart/form-data">
 
+        @if (session('success'))
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Success!</strong>
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+
+
             @csrf
             @if ($errors->any())
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -99,12 +107,12 @@
 
             <div class="mb-4">
                 <label for="bedrooms" class="block text-gray-700 text-sm font-bold mb-2">Bedrooms</label>
-                <input type="number" name="bedrooms" id="bedrooms" class="w-full border rounded py-2 px-3">
+                <input type="number" name="bedrooms" id="bedrooms" class="w-full border rounded py-2 px-3"step="1">
             </div>
 
             <div class="mb-4">
                 <label for="bathrooms" class="block text-gray-700 text-sm font-bold mb-2">Bathrooms</label>
-                <input type="number" name="bathrooms" id="bathrooms" class="w-full border rounded py-2 px-3" step="0.5">
+                <input type="number" name="bathrooms" id="bathrooms" class="w-full border rounded py-2 px-3" step="1">
             </div>
 
             <div class="mb-4">
@@ -126,7 +134,21 @@
                 <input type="file" name="image" id="image" class="w-full border rounded py-2 px-3" accept="image/*">
             </div>
 
-           
+            <div class="mb-4">
+                <label for="contact_name" class="block text-gray-700 text-sm font-bold mb-2">Contact Name</label>
+                <input type="text" name="contact_name" id="contact_name" class="w-full border rounded py-2 px-3">
+            </div>
+
+            <div class="mb-4">
+                <label for="contact_email" class="block text-gray-700 text-sm font-bold mb-2">Contact Email</label>
+                <input type="email" name="contact_email" id="contact_email" class="w-full border rounded py-2 px-3">
+            </div>
+
+            <div class="mb-4">
+                <label for="contact_phone" class="block text-gray-700 text-sm font-bold mb-2">Contact Phone</label>
+                <input type="text" name="contact_phone" id="contact_phone" class="w-full border rounded py-2 px-3">
+            </div>
+
         <div class="mb-4">
             <label for="latitude" class="block text-gray-700 text-sm font-bold mb-2">Latitude</label>
             <input type="text" name="latitude" id="latitude" class="w-full border rounded py-2 px-3">
@@ -223,6 +245,21 @@ document.querySelectorAll('#bedrooms, #bathrooms, #area, #price').forEach(input 
                 this.value = 0;
             }
         });
+        //contact number
+                document.getElementById('contact_phone').addEventListener('input', function(event) {
+            let inputValue = event.target.value;
+            // Remove any non-numeric characters
+            let numericValue = inputValue.replace(/\D/g, '');
+
+            if (numericValue.length > 11) {
+                // Truncate to 11 digits
+                numericValue = numericValue.slice(0, 11);
+            }
+
+            // Update the input field value
+            event.target.value = numericValue;
+        }); 
+
     </script>
 </body>
 </html>

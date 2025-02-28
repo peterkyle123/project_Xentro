@@ -47,6 +47,9 @@ class ListingController extends Controller
             'image' => 'required|image|max:5000', 
             'latitude' => 'nullable|numeric', // Added validation for latitude
             'longitude' => 'nullable|numeric',
+            'contact_name' => 'required|string|max:255', // Added validation
+            'contact_email' => 'required|email|max:255', // Added validation
+            'contact_phone' => 'nullable|string|max:20', 
         ]);
 
 
@@ -98,10 +101,12 @@ class ListingController extends Controller
             'area' => 'nullable|numeric|min:0', // Area should be a non-negative number
             'status' => 'required|string|max:50',
             'image' => 'required|image|max:5000',
-            'latitude' => 'nullable|numeric', // Added validation for latitude
+            'latitude' => 'nullable|numeric', 
             'longitude' => 'nullable|numeric', 
-             // Status should be a string
-            // Add other validation rules as needed
+            'contact_name' => 'required|string|max:255', 
+            'contact_email' => 'required|email|max:255', 
+            'contact_phone' => 'nullable|string|max:20', 
+
         ]);
            // If housing_type is not "Other", clear custom_housing_type
             if ($request->housing_type !== 'Other') {
@@ -126,7 +131,7 @@ class ListingController extends Controller
     public function userIndex()
 {
     $listings = Listing::paginate(9); // Or another number of listings per page
-    return view('user_listings.index', compact('listings'));
+    return view('user_listings  ', compact('listings'));
 }
 
 public function userShow(Listing $listing)
