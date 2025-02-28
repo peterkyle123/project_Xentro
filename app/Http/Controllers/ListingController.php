@@ -9,15 +9,56 @@ use Illuminate\Support\Facades\Storage;
 
 class ListingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $listings = Listing::select('id', 'title', 'type', 'category', 'housing_type','custom_housing_type', 'price', 'address', 'city', 'state', 'zip', 'bedrooms', 'bathrooms', 'area', 'status')
-        ->paginate(6);
         if (!session('admin_logged_in')) {
             return redirect()->route('admin.login');
         }
-        $listings = Listing::paginate(6);
+
+        $listings = Listing::select(
+            'id',
+            'title',
+            'type',
+            'category',
+            'housing_type',
+            'custom_housing_type',
+            'price',
+            'address',
+            'city',
+            'state',
+            'zip',
+            'bedrooms',
+            'bathrooms',
+            'area',
+            'status',
+            'image',
+            'latitude',
+            'longitude',
+            'contact_name',
+            'contact_email',
+            'contact_phone',
+
+        );
+
+        if ($request->filled('category')) {
+            $listings->where('category', $request->category);
+        }
+
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+            $listings->where(function ($query) use ($searchTerm) {
+                $query->where('title', 'like', $searchTerm)
+                      ->orWhere('city', 'like', $searchTerm)
+                      ->orWhere('state', 'like', $searchTerm)
+                      ->orWhere('address', 'like', $searchTerm);
+            });
+        }
+
+        $listings = $listings->paginate(6);
+
         return view('listings', compact('listings'));
+    
+        
     }
 
     public function create()
@@ -136,10 +177,29 @@ class ListingController extends Controller
         return redirect()->route('admin.listings.index')->with('success', 'Listing deleted successfully.');
     }
     // user
-    public function userIndex()
+    public function userIndex(Request $request)
 {
-    $listings = Listing::paginate(9); // Or another number of listings per page
-    return view('user_listings.index  ', compact('listings'));
+    $listings = Listing::query(); // Start with a fresh query builder
+
+        // Apply category filter if provided
+        if ($request->filled('category')) {
+            $listings->where('category', $request->category);
+        }
+
+        // Apply search filter if provided
+        if ($request->filled('search')) {
+            $searchTerm = '%' . $request->search . '%';
+            $listings->where(function ($query) use ($searchTerm) {
+                $query->where('title', 'like', $searchTerm)
+                      ->orWhere('city', 'like', $searchTerm)
+                      ->orWhere('state', 'like', $searchTerm)
+                      ->orWhere('description', 'like', $searchTerm);
+            });
+        }
+
+        $listings = $listings->paginate(9);
+
+        return view('user_listings.index', compact('listings'));;
 }
 
 public function userShow(Listing $listing)

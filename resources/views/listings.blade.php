@@ -11,20 +11,28 @@
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-semibold mb-4">Manage Listings</h1>
 
-        <div class="mb-4 flex justify-center space-x-4">
-            <!-- Add New Listing Button -->
-            <a href="{{ route('admin.listings.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
-                Add New Listing
-            </a>
+        <div class="mb-4 flex justify-between items-center">
+            <div class="flex space-x-4">
+                <a href="{{ route('admin.listings.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">
+                    Add New Listing
+                </a>
+                <a href="/admin/dashboard">
+                    <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+                        Back to Home
+                    </button>
+                </a>
+            </div>
 
-            <!-- Back to Home Button -->
-            <a href="/admin/dashboard">
-                <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
-                    Back to Home
-                </button>
-            </a>
+            <form action="{{ route('admin.listings.index') }}" method="GET" class="flex items-center">
+                <select name="category" class="border rounded-l-md p-2">
+                    <option value="">All Categories</option>
+                    <option value="land" {{ request('category') == 'land' ? 'selected' : '' }}>Land</option>
+                    <option value="housing" {{ request('category') == 'housing' ? 'selected' : '' }}>Housing</option>
+                </select>
+                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="border p-2">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded-r-md p-2">Search</button>
+            </form>
         </div>
-
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($listings as $listing)
@@ -65,7 +73,6 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Are you sure?')">Delete</button>
-                            
                             </form>
                         </div>
                     </div>

@@ -12,12 +12,12 @@
  <header class="bg-white shadow-md relative">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <!-- Logo -->
-            <a href="#" class="text-2xl font-bold text-blue-600">Your Real Estate</a>
+            <a href="#" class="text-2xl font-bold text-orange-800">Xentro Estates</a>
 
             <!-- Navigation Menu (Desktop) -->
             <nav class="hidden md:flex space-x-6">
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Properties</a>
+                <a href="user-listings1" class="text-gray-700 hover:text-blue-500 transition duration-300">Properties</a>
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">About Us</a>
                 <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
             </nav>
@@ -45,7 +45,7 @@
         <div class="relative z-10 text-center text-white flex flex-col justify-center items-center h-full">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">Find Your Dream Home</h1>
             <p class="text-lg mb-8">Discover a wide range of properties to suit your needs.</p>
-            <a href="#" class="bg-transparent border border-white text-white hover:bg-black font-semibold py-3 px-8 rounded-full transition duration-300">Browse Properties</a>
+            <a href="user-listings1" class="bg-transparent border border-white text-white hover:bg-black font-semibold py-3 px-8 rounded-full transition duration-300">Browse Properties</a>
         </div>
     </section>
 

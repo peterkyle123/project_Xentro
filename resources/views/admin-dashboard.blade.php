@@ -9,40 +9,23 @@
 </head>
 <body class="bg-gray-100">
 
-    <div class="flex h-screen">
+    <div class="flex flex-col h-screen">
 
-        <aside class="bg-gray-800 text-white w-64 p-6 flex flex-col shadow-lg">
-            <h2 class="text-3xl font-semibold text-center mb-8">Admin Panel</h2>
+        <header class="bg-gray-800 text-white p-4 flex justify-between items-center shadow-md">
+            <h2 class="text-2xl font-semibold">Xentro</h2>
 
-            <nav class="flex-grow">
-                <ul>
-                    <li class="mb-4">
-                        <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-300">Dashboard</a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="/admin/listings" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-300">Listings</a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-300">Inquiries</a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-300">Users</a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="/admin-edit" class="block p-3 rounded-lg hover:bg-gray-700 transition duration-300">Account</a>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="mt-4">
+            <nav class="flex items-center space-x-4">
+                <a href="/" class="hover:text-gray-300">Website</a>
+                <a href="/admin/listings" class="hover:text-gray-300">Listings</a>
+                <a href="#" class="hover:text-gray-300">Inquiries</a>
+                <a href="#" class="hover:text-gray-300">Users</a>
+                <a href="/admin-edit" class="hover:text-gray-300">Account</a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white p-3 rounded-lg transition duration-300">
-                        Logout
-                    </button>
+                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Logout</button>
                 </form>
-            </div>
-        </aside>
+            </nav>
+        </header>
 
         <main class="flex-1 bg-gray-50 p-8">
             <div class="bg-white p-6 rounded-lg shadow-lg">
