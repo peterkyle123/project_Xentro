@@ -1,9 +1,12 @@
 <?php
 use App\Models\Listing;
+use App\Models\Team;
 use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AboutUsAdminController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LogoutController;
 
@@ -51,4 +54,12 @@ Route::get('/admin/inquiries', [InquiryController::class, 'viewInquiries'])->nam
 Route::delete('/admin/inquiries/bulk-delete', [InquiryController::class, 'bulkDelete'])->name('admin.inquiries.bulkDelete');
 Route::post('/admin/listings/{listing}/toggleFeatured', [ListingController::class, 'toggleFeatured'])->name('admin.listings.toggleFeatured');
 Route::post('/listings/{listing}/like', [ListingController::class, 'like']);
+
+Route::get('/about', function () {
+    $teamMembers = Team::all(); // Fetch all team members
+    return view('about', compact('teamMembers')); // Assuming your Blade file is named 'about.blade.php'
+});
+
+Route::get('/create-team', [TeamController::class, 'create'])->name('team.create');
+Route::post('/store-team', [TeamController::class, 'store'])->name('team.store');
 

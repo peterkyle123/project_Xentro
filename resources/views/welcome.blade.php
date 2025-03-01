@@ -19,10 +19,10 @@
 
             <!-- Navigation Menu (Desktop) -->
             <nav class="hidden md:flex space-x-6">
-                <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Home</a>
-                <a href="user-listings1" class="text-gray-700 hover:text-blue-500 transition duration-300">Properties</a>
-                <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">About Us</a>
-                <a href="#" class="text-gray-700 hover:text-blue-500 transition duration-300">Contact</a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Home</a>
+                <a href="user-listings1" class="text-gray-700 hover:text-orange-500 transition duration-300">Properties</a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">About Us</a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Contact</a>
             </nav>
 
             <!-- Mobile Menu Button -->

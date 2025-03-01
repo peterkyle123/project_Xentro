@@ -10,30 +10,30 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         .like-button {
-            z-index: 1000; /* Ensure button is on top */
-            position: relative; /* z-index requires a positioned element */
+            z-index: 1000;
+            position: relative;
         }
     </style>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-4">
-        <div class="flex justify-between items-center mb-4">
-            <h1 class="text-2xl font-semibold">Listings</h1>
-            <form action="{{ route('user_listings.index') }}" method="GET" class="flex items-center">
-                <select name="category" class="border rounded-l-md p-2">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+            <h1 class="text-2xl font-semibold mb-2 md:mb-0">Listings</h1>
+            <form action="{{ route('user_listings.index') }}" method="GET" class="flex flex-col md:flex-row items-center w-full md:w-auto">
+                <select name="category" class="border rounded-l-md p-2 mb-2 md:mb-0 md:rounded-r-none w-full md:w-auto">
                     <option value="">All Categories</option>
                     <option value="land" {{ request('category') == 'land' ? 'selected' : '' }}>Land</option>
                     <option value="housing" {{ request('category') == 'housing' ? 'selected' : '' }}>Housing</option>
                 </select>
-                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="border p-2">
-                <select name="sort" class="border p-2">
+                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="border p-2 mb-2 md:mb-0 w-full md:w-auto">
+                <select name="sort" class="border p-2 mb-2 md:mb-0 w-full md:w-auto">
                     <option value="">Sort By</option>
                     <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Price (Low to High)</option>
                     <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Price (High to Low)</option>
                     <option value="area_asc" {{ request('sort') == 'area_asc' ? 'selected' : '' }}>Area (Small to Large)</option>
                     <option value="area_desc" {{ request('sort') == 'area_desc' ? 'selected' : '' }}>Area (Large to Small)</option>
                 </select>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded-r-md p-2">Search</button>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded-r-md p-2 w-full md:w-auto">Search</button>
             </form>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -86,7 +86,7 @@
     <script>
         $(document).ready(function() {
             $('.like-button').click(function() {
-                console.log('Button clicked'); // Debugging: Check if click event is triggered
+                console.log('Button clicked');
                 const listingId = $(this).data('listing-id');
                 const button = $(this);
                 $.ajax({
@@ -96,7 +96,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
-                        console.log('AJAX success:', response); // Debugging: Check AJAX response
+                        console.log('AJAX success:', response);
                         if (response.liked) {
                             button.find('svg').attr('fill', 'red');
                         } else {
