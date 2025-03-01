@@ -42,9 +42,7 @@
                     @endif
                     <div class="p-6">
                         <h2 class="text-xl font-semibold mb-2">{{ $listing->title }}</h2>
-                        <p class="text-gray-600 text-sm mb-4">
-                            {{ $listing->city }}, {{ $listing->state }}
-                        </p>
+                        <p class="text-gray-600 text-sm mb-4">{{ $listing->city }}, {{ $listing->state }}</p>
                         <div class="flex items-center justify-between mb-4">
                             <span class="text-lg font-bold text-blue-700">₱{{ number_format($listing->price) }}</span>
                             <span class="text-sm text-gray-500">{{ $listing->area }} sqft</span>
@@ -67,31 +65,30 @@
                                 View Full Details
                             </a>
                         </div>
-                        <div class="mt-4 flex justify-around">
+                        <div class="mt-4 flex justify-around items-center">
                             <a href="{{ route('admin.listings.edit', $listing->id) }}" class="text-green-600 hover:underline">Edit</a>
                             <form action="{{ route('admin.listings.destroy', $listing->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:underline" onclick="return confirm('Are you sure?')">Delete</button>
-                            
                             </form>
                             <form action="{{ route('admin.listings.toggleFeatured', $listing->id) }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="{{ $listing->is_featured ? 'text-yellow-600 hover:underline' : 'text-blue-600 hover:underline' }}">
-                                {{ $listing->is_featured ? 'Remove from Featured' : 'Add to Featured' }}
-                            </button>
-                        </form>
+                                @csrf
+                                <button type="submit" class="{{ $listing->is_featured ? 'text-yellow-600 hover:underline' : 'text-blue-600 hover:underline' }}">
+                                    {{ $listing->is_featured ? 'Remove from Featured' : 'Add to Featured' }}
+                                </button>
+                            </form>
+                            <div class="bg-white rounded-2xl shadow-md overflow-hidden">
+                            <div class="mt-4 flex justify-around items-center">
+                                <span class="text-gray-500">Likes: {{ $listing->likes }}</span>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
-                
             @endforeach
-            
         </div>
-        
-        <div class="mt-6">
-            {{ $listings->links() }}
-        </div>
+        <div class="mt-6">{{ $listings->links() }}</div>
     </div>
 </body>
 </html>

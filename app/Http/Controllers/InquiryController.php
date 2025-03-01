@@ -32,6 +32,9 @@ class InquiryController extends Controller
     // admin
     public function viewInquiries()
     {
+        if (!session('admin_logged_in')) {
+            return redirect()->route('admin.login');
+        }
         $inquiries = Inquiry::with('listing')->paginate(10); // Adjust pagination as needed
         return view('view_inqueries', compact('inquiries'));
     }

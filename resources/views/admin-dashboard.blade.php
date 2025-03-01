@@ -10,21 +10,27 @@
 <body class="bg-gray-100">
 
     <div class="flex flex-col h-screen">
+    <header class="bg-white text-orange-950 p-4 flex justify-between items-center shadow-md">
+    <!-- Logo and Title -->
+    <a href="/" class="flex items-center space-x-2">
+        <!-- Image (JFIF format) -->
+       <img src="{{ asset('images/XENTRO ESTATES.jfif') }}" alt="Xentro Estates Logo" class="w-42 h-18 object-cover">
 
-        <header class="bg-gray-800 text-white p-4 flex justify-between items-center shadow-md">
-            <h2 class="text-2xl font-semibold">Xentro</h2>
+    </a>
 
-            <nav class="flex items-center space-x-4">
-                <a href="/" class="hover:text-gray-300">Website</a>
-                <a href="/admin/listings" class="hover:text-gray-300">Listings</a>
-                <a href="/admin/inquiries" class="hover:text-gray-300">Inquiries</a>
-                <a href="/admin-edit" class="hover:text-gray-300">Account</a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Logout</button>
-                </form>
-            </nav>
-        </header>
+    <!-- Navigation Menu -->
+    <nav class="flex items-center space-x-4">
+        <a href="/" class="hover:text-orange-950">Website</a>
+        <a href="/admin/listings" class="hover:text-orange-950">Listings</a>
+        <a href="/admin/inquiries" class="hover:text-orange-950">Inquiries</a>
+        <a href="/admin-edit" class="hover:text-orange-950">Account</a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">Logout</button>
+        </form>
+    </nav>
+</header>
+
 
         <main class="flex-1 bg-gray-50 p-8">
             <div class="bg-white p-6 rounded-lg shadow-lg">

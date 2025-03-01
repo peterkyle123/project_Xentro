@@ -49,4 +49,6 @@ Route::get('/inquiries/{listing}', [InquiryController::class, 'create'])->name('
 Route::post('/inquiries/{listing}', [InquiryController::class, 'store'])->name('inquiries.store');
 Route::get('/admin/inquiries', [InquiryController::class, 'viewInquiries'])->name('admin.inquiries.index');
 Route::delete('/admin/inquiries/bulk-delete', [InquiryController::class, 'bulkDelete'])->name('admin.inquiries.bulkDelete');
-Route::post('/admin/listings/{listing}/toggle-featured', [ListingController::class, 'toggleFeatured'])->name('admin.listings.toggleFeatured');
+Route::post('/admin/listings/{listing}/toggleFeatured', [ListingController::class, 'toggleFeatured'])->name('admin.listings.toggleFeatured');
+Route::post('/listings/{listing}/like', [ListingController::class, 'like']);
+

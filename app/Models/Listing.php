@@ -32,5 +32,8 @@ class Listing extends Model
         'contact_email',
         'contact_phone',
         'is_featured',
+        'likes', 
+        'liked_sessions',// Make sure likes is fillable.
     ];
+    
 }

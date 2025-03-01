@@ -12,7 +12,10 @@
  <header class="bg-white shadow-md relative">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <!-- Logo -->
-            <a href="#" class="text-2xl font-bold text-orange-800">Xentro Estates</a>
+            <a href="/" class="flex items-center space-x-2">
+            <!-- Image (JFIF format) -->
+            <img src="{{ asset('images/XENTRO ESTATES.jfif') }}" alt="Xentro Estates Logo" class="w-20 h-10 object-cover">
+        </a>
 
             <!-- Navigation Menu (Desktop) -->
             <nav class="hidden md:flex space-x-6">
@@ -52,29 +55,35 @@
     <section class="py-16">
     <div class="container mx-auto px-4">
         <h2 class="text-3xl font-semibold text-center mb-8">Featured Properties</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach ($featuredListings as $listing)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-                    <a href="{{ route('admin.listings.show', $listing->id) }}">
-                        @if ($listing->image)
-                            <img src="{{ asset('storage/' . $listing->image) }}" alt="{{ $listing->title }}" class="w-full h-64 object-cover">
-                        @else
-                            <img src="{{ asset('images/default-property.jpg') }}" alt="Default Property" class="w-full h-64 object-cover">
-                        @endif
-                    </a>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">{{ $listing->title }}</h3>
-                        <p class="text-gray-600 mb-4">{{ Str::limit($listing->description, 100) }}</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-lg font-bold text-blue-500">₱{{ number_format($listing->price) }}</span>
-                            <a href="{{ route('admin.listings.show', $listing->id) }}" class="text-blue-500 hover:text-blue-600">View Details</a>
+        
+        @if ($featuredListings->isEmpty())
+            <p class="text-center text-gray-500">No featured properties available at the moment.</p>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach ($featuredListings as $listing)
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+                        <a href="{{ route('admin.listings.show', $listing->id) }}">
+                            @if ($listing->image)
+                                <img src="{{ asset('storage/' . $listing->image) }}" alt="{{ $listing->title }}" class="w-full h-64 object-cover">
+                            @else
+                                <img src="{{ asset('images/default-property.jpg') }}" alt="Default Property" class="w-full h-64 object-cover">
+                            @endif
+                        </a>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">{{ $listing->title }}</h3>
+                            <p class="text-gray-600 mb-4">{{ Str::limit($listing->description, 100) }}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold text-blue-500">₱{{ number_format($listing->price) }}</span>
+                                <a href="{{ route('user_listings.show', $listing->id) }}" class="text-blue-500 hover:text-blue-600">View Details</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 </section>
+
 
     <section class="bg-gray-200 py-16">
         <div class="container mx-auto px-4">
