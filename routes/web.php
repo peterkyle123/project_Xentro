@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Listing;
 use App\Models\Team;
 use App\Http\Controllers\ListingController;
@@ -34,32 +35,42 @@ Route::get('/admin/dashboard', function () {
 // Logout
 Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 
-// Listings
-Route::prefix('admin')->group(function () {
-    Route::get('/listings', [ListingController::class, 'index'])->name('admin.listings.index');
-    Route::get('/listings/create', [ListingController::class, 'create'])->name('admin.listings.create');
-    Route::post('/listings', [ListingController::class, 'store'])->name('admin.listings.store');
-    Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('admin.listings.show');
-    Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('admin.listings.edit');
-    Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('admin.listings.update');
-    Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->name('admin.listings.destroy');
+// Admin Routes (Grouped)
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Listings
+    Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
+    Route::get('/listings/create', [ListingController::class, 'create'])->name('listings.create');
+    Route::post('/listings', [ListingController::class, 'store'])->name('listings.store');
+    Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
+    Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->name('listings.edit');
+    Route::put('/listings/{listing}', [ListingController::class, 'update'])->name('listings.update');
+    Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->name('listings.destroy');
+    Route::post('/listings/{listing}/toggleFeatured', [ListingController::class, 'toggleFeatured'])->name('listings.toggleFeatured');
+
+    // Inquiries
+    Route::delete('/inquiries/bulk-delete', [InquiryController::class, 'bulkDelete'])->name('inquiries.bulkDelete');
+    Route::get('/inquiries', [InquiryController::class, 'viewInquiries'])->name('inquiries.view');
+
+    // Admin Account Editing
+    Route::get('/edit', [AdminController::class, 'edit'])->name('edit');
+    Route::put('/update', [AdminController::class, 'update'])->name('update');
 });
-Route::get('/admin-edit', [AdminController::class, 'edit'])->name('admin-edit');
-Route::put('/admin/update', [AdminController::class, 'update'])->name('admin.update');
+
 Route::get('/user-listings1', [ListingController::class, 'userIndex'])->name('user_listings.index');
 Route::get('/user-listings/{listing}', [ListingController::class, 'userShow'])->name('user_listings.show');
+
+// Inquiries (Front-end)
 Route::get('/inquiries/{listing}', [InquiryController::class, 'create'])->name('inquiries.create');
 Route::post('/inquiries/{listing}', [InquiryController::class, 'store'])->name('inquiries.store');
-Route::get('/admin/inquiries', [InquiryController::class, 'viewInquiries'])->name('admin.inquiries.index');
-Route::delete('/admin/inquiries/bulk-delete', [InquiryController::class, 'bulkDelete'])->name('admin.inquiries.bulkDelete');
-Route::post('/admin/listings/{listing}/toggleFeatured', [ListingController::class, 'toggleFeatured'])->name('admin.listings.toggleFeatured');
+
+// Listings (Front-end)
 Route::post('/listings/{listing}/like', [ListingController::class, 'like']);
 
+// About Us and Team
 Route::get('/about', function () {
-    $teamMembers = Team::all(); // Fetch all team members
-    return view('about', compact('teamMembers')); // Assuming your Blade file is named 'about.blade.php'
+    $teamMembers = Team::all();
+    return view('about', compact('teamMembers'));
 });
 
 Route::get('/create-team', [TeamController::class, 'create'])->name('team.create');
 Route::post('/store-team', [TeamController::class, 'store'])->name('team.store');
-

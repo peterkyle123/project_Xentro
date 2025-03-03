@@ -43,19 +43,19 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($inquiries as $inquiry)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <input type="checkbox" name="inquiries[]" value="{{ $inquiry->id }}" class="inquiry-checkbox">
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->listing->id }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->listing->title }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->email }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->phone_number }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->address }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->message }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->created_at }}</td>
-                        </tr>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <input type="checkbox" name="inquiries[]" value="{{ $inquiry->id }}" class="inquiry-checkbox">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->id }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->listing ? $inquiry->listing->title : 'N/A' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->email }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->phone_number }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->address }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->message }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $inquiry->created_at }}</td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -67,27 +67,36 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectAllCheckbox = document.getElementById('selectAll');
-            const inquiryCheckboxes = document.querySelectorAll('.inquiry-checkbox');
+   document.getElementById('bulkDeleteForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-            selectAllCheckbox.addEventListener('change', function() {
-                inquiryCheckboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            inquiryCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const allChecked = Array.from(inquiryCheckboxes).every(checkbox => checkbox.checked);
-                    selectAllCheckbox.checked = allChecked;
-                });
-            });
-        });
-        document.getElementById('bulkDeleteForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        this.submit(); // Submit the form using JavaScript
+    const selectedInquiries = [];
+    document.querySelectorAll('.inquiry-checkbox:checked').forEach(function(checkbox) {
+        selectedInquiries.push(checkbox.value);
     });
-    </script>
+
+    if (selectedInquiries.length === 0) {
+        alert('Please select at least one inquiry to delete.');
+        return;
+    }
+
+    console.log('Selected inquiries:', selectedInquiries); // Debugging
+
+    // Remove any existing hidden inputs
+    document.querySelectorAll('#bulkDeleteForm input[name="inquiries[]"]').forEach(input => input.remove());
+
+    // Add selected inquiries as hidden inputs
+    selectedInquiries.forEach(id => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'inquiries[]';
+        input.value = id;
+        document.getElementById('bulkDeleteForm').appendChild(input);
+    });
+
+    this.submit();
+});
+
+</script>
 </body>
 </html>

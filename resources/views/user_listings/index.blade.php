@@ -16,10 +16,18 @@
     </style>
 </head>
 <body class="bg-gray-100">
-    <div class="container mx-auto p-4">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-4">
-            <h1 class="text-2xl font-semibold mb-2 md:mb-0">Listings</h1>
-            <form action="{{ route('user_listings.index') }}" method="GET" class="flex flex-col md:flex-row items-center w-full md:w-auto">
+            <div class="container mx-auto p-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+            <div>
+                <h1 class="text-2xl font-semibold mb-2">Listings</h1>
+                <a href="/#">
+                    <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
+                        Back to Home
+                    </button>
+                </a>
+            </div>
+
+            <form action="{{ route('user_listings.index') }}" method="GET" class="flex flex-col md:flex-row items-center w-full md:w-auto mt-4 md:mt-0">
                 <select name="category" class="border rounded-l-md p-2 mb-2 md:mb-0 md:rounded-r-none w-full md:w-auto">
                     <option value="">All Categories</option>
                     <option value="land" {{ request('category') == 'land' ? 'selected' : '' }}>Land</option>

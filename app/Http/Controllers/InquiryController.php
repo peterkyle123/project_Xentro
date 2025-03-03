@@ -40,13 +40,21 @@ class InquiryController extends Controller
     }
     public function bulkDelete(Request $request)
     {
+        \Log::info('Bulk delete request received.', $request->all());
+    
         $request->validate([
             'inquiries' => 'required|array',
             'inquiries.*' => 'exists:inquiries,id',
         ]);
     
-        Inquiry::whereIn('id', $request->inquiries)->delete();
-    
-        return redirect()->back()->with('success', 'Selected inquiries deleted successfully!');
+        try {
+            Inquiry::whereIn('id', $request->inquiries)->delete();
+            \Log::info('Deletion completed.');
+            return redirect()->back()->with('success', 'Selected inquiries deleted successfully!');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting inquiries: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred during deletion.');
+        }
     }
+    
 }
