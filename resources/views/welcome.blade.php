@@ -20,6 +20,7 @@
             <!-- Navigation Menu (Desktop) -->
             <nav class="hidden md:flex space-x-6">
                 <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Home</a>
+                <a href="/ngh-subdivision" class="text-gray-700 hover:text-orange-500 transition duration-300">NGH Subdivision</a>
                 <a href="user-listings1" class="text-gray-700 hover:text-orange-500 transition duration-300">Properties</a>
                 <a href="/about" class="text-gray-700 hover:text-orange-500 transition duration-300">About Us</a>
                 <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Contact</a>
@@ -90,10 +91,10 @@
                 <div>
                     <h2 class="text-3xl font-semibold mb-4">About Us</h2>
                     <p class="text-gray-700 mb-6">We are a leading real estate agency dedicated to helping you find your dream home. With years of experience and a wide range of properties, we are committed to providing exceptional service and making your real estate journey seamless.</p>
-                    <a href="#" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full transition duration-300">Learn More</a>
+                    <a href="/about" class="bg-yellow-500 hover:bg-yellow-600  text-white font-semibold py-3 px-8 rounded-full transition duration-300">Learn More</a>
                 </div>
                 <div>
-                    <img src="{{ asset('images/about-us.jpg') }}" alt="About Us" class="w-full rounded-lg shadow-md">
+                    <img src="{{ asset('images/Xentro.png') }}" alt="About Us" class="w-full rounded-lg shadow-md">
                 </div>
             </div>
         </div>
@@ -103,11 +104,11 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-semibold mb-8">Contact Us</h2>
             <p class="text-gray-700 mb-8">Have questions? Contact us today to learn more about our properties and services.</p>
-            <a href="#" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 px-8 rounded-full transition duration-300">Contact Us</a>
+            <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-8 rounded-full transition duration-300">Contact Us</a>
         </div>
     </section>
 
-    <footer class="bg-gray-800 text-white py-8">
+    <footer class="bg-yellow-800 text-white py-8">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; {{ date('Y') }} Your Real Estate. All rights reserved.</p>
         </div>

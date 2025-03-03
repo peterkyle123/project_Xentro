@@ -52,9 +52,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/inquiries', [InquiryController::class, 'viewInquiries'])->name('inquiries.view');
 
     // Admin Account Editing
-    Route::get('/edit', [AdminController::class, 'edit'])->name('edit');
-    Route::put('/update', [AdminController::class, 'update'])->name('update');
+  // Admin Account Editing
+  
 });
+Route::get('/admin-edit', [AdminController::class, 'edit'])->name('admin-edit');
+Route::put('/admin/update', [AdminController::class, 'update'])->name('admin.update');
 
 Route::get('/user-listings1', [ListingController::class, 'userIndex'])->name('user_listings.index');
 Route::get('/user-listings/{listing}', [ListingController::class, 'userShow'])->name('user_listings.show');
@@ -74,3 +76,8 @@ Route::get('/about', function () {
 
 Route::get('/create-team', [TeamController::class, 'create'])->name('team.create');
 Route::post('/store-team', [TeamController::class, 'store'])->name('team.store');
+// NGH blade
+Route::get('/ngh-subdivision', function () {
+    return view('NGH_sud');
+});
+Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');

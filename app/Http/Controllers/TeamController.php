@@ -42,4 +42,9 @@ class TeamController extends Controller
 
         return redirect()->route('team.create')->with('success', 'Team member added successfully!');
     }
+    public function show($id)
+    {
+        $member = Team::findOrFail($id);
+        return view('team_index', compact('member'));
+    }
 }
