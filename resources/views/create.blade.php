@@ -276,6 +276,22 @@ document.querySelectorAll('#bedrooms, #bathrooms, #area, #price').forEach(input 
             event.target.value = numericValue;
         }); 
 
+                document.addEventListener("DOMContentLoaded", function () {
+            const categorySelect = document.getElementById("category");
+            const bedroomsInput = document.getElementById("bedrooms");
+            const bathroomsInput = document.getElementById("bathrooms");
+
+            categorySelect.addEventListener("change", function () {
+                if (this.value === "Land") {
+                    bedroomsInput.disabled = true;
+                    bathroomsInput.disabled = true;
+                } else {
+                    bedroomsInput.disabled = false;
+                    bathroomsInput.disabled = false;
+                }
+            });
+        });
+
     </script>
 </body>
 </html>

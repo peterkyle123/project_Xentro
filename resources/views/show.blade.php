@@ -45,13 +45,17 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 19v-7" />
             </svg>
-            <p class="text-lg"><strong class="font-medium text-gray-800">Bedrooms:</strong> {{ $listing->bedrooms }}</p>
+            @if ($listing->category !== 'Land') 
+            <p class="mb-2"><strong>Bathrooms:</strong> {{ $listing->bedrooms }}</p>
+        @endif
           </div>
           <div class="flex items-center mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
             </svg>
-            <p class="text-lg"><strong class="font-medium text-gray-800">Bathrooms:</strong> {{ $listing->bathrooms }}</p>
+            @if ($listing->category !== 'Land') 
+            <p class="mb-2"><strong>Bathrooms:</strong> {{ $listing->bathrooms }}</p>
+        @endif
           </div>
           <div class="flex items-center mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -47,18 +47,20 @@
                         <p class="text-gray-600 text-sm mb-4">{{ $listing->city }}, {{ $listing->state }}</p>
                         <div class="flex items-center justify-between mb-4">
                             <span class="text-lg font-bold text-blue-700">₱{{ number_format($listing->price) }}</span>
-                            <span class="text-sm text-gray-500">{{ $listing->area }} sqft</span>
+                            <span class="text-sm text-gray-500">{{ number_format($listing->area, 0, '.', ',') }} sqft</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2 mb-4">
-                            <div class="text-center">
-                                <span class="block font-semibold text-sm">{{ $listing->bedrooms }}</span>
-                                <span class="block text-xs text-gray-500">Beds</span>
+                        @if ($listing->category !== 'Land')
+                            <div class="grid grid-cols-2 gap-2 mb-4">
+                                <div class="text-center">
+                                    <span class="block font-semibold text-sm">{{ $listing->bedrooms }}</span>
+                                    <span class="block text-xs text-gray-500">Beds</span>
+                                </div>
+                                <div class="text-center">
+                                    <span class="block font-semibold text-sm">{{ $listing->bathrooms }}</span>
+                                    <span class="block text-xs text-gray-500">Baths</span>
+                                </div>
                             </div>
-                            <div class="text-center">
-                                <span class="block font-semibold text-sm">{{ $listing->bathrooms }}</span>
-                                <span class="block text-xs text-gray-500">Baths</span>
-                            </div>
-                        </div>
+                        @endif
                         <div class="flex justify-between items-center">
                             <div class="text-center">
                                 <a href="{{ route('user_listings.show', $listing->id) }}" class="inline-flex items-center bg-blue-100 hover:bg-blue-200 text-blue-700 py-2 px-6 rounded-full font-semibold transition-colors duration-300">

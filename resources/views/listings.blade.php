@@ -29,8 +29,15 @@
                     <option value="land" {{ request('category') == 'land' ? 'selected' : '' }}>Land</option>
                     <option value="housing" {{ request('category') == 'housing' ? 'selected' : '' }}>Housing</option>
                 </select>
-                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="border p-2">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded-r-md p-2">Search</button>
+                <input type="text" name="search" placeholder="Search..." value="{{ request('search') }}" class="border p-2 mb-2 md:mb-0 w-full md:w-auto">
+                <select name="sort" class="border p-2 mb-2 md:mb-0 w-full md:w-auto">
+                    <option value="">Sort By</option>
+                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Price (Low to High)</option>
+                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Price (High to Low)</option>
+                    <option value="area_asc" {{ request('sort') == 'area_asc' ? 'selected' : '' }}>Area (Small to Large)</option>
+                    <option value="area_desc" {{ request('sort') == 'area_desc' ? 'selected' : '' }}>Area (Large to Small)</option>
+                </select>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white rounded-r-md p-2 w-full md:w-auto">Search</button>
             </form>
         </div>
 
@@ -45,18 +52,20 @@
                         <p class="text-gray-600 text-sm mb-4">{{ $listing->city }}, {{ $listing->state }}</p>
                         <div class="flex items-center justify-between mb-4">
                             <span class="text-lg font-bold text-blue-700">₱{{ number_format($listing->price) }}</span>
-                            <span class="text-sm text-gray-500">{{ $listing->area }} sqft</span>
+                            <span class="text-sm text-gray-500">{{ number_format($listing->area, 0, '.', ',') }} sqft</span>
                         </div>
-                        <div class="grid grid-cols-2 gap-2 mb-4">
-                            <div class="text-center">
-                                <span class="block font-semibold text-sm">{{ $listing->bedrooms }}</span>
-                                <span class="block text-xs text-gray-500">Beds</span>
-                            </div>
-                            <div class="text-center">
-                                <span class="block font-semibold text-sm">{{ $listing->bathrooms }}</span>
-                                <span class="block text-xs text-gray-500">Baths</span>
-                            </div>
+                @if ($listing->category !== 'Land')
+                    <div class="grid grid-cols-2 gap-2 mb-4">
+                        <div class="text-center">
+                            <span class="block font-semibold text-sm">{{ $listing->bedrooms }}</span>
+                            <span class="block text-xs text-gray-500">Beds</span>
                         </div>
+                        <div class="text-center">
+                            <span class="block font-semibold text-sm">{{ $listing->bathrooms }}</span>
+                            <span class="block text-xs text-gray-500">Baths</span>
+                        </div>
+                    </div>
+                @endif
                         <div class="text-center">
                             <a href="{{ route('admin.listings.show', $listing->id) }}" class="inline-flex items-center bg-blue-100 hover:bg-blue-200 text-blue-700 py-2 px-6 rounded-full font-semibold transition-colors duration-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

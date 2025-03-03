@@ -43,19 +43,41 @@ class ListingController extends Controller
 
         );
 
-        if ($request->filled('category')) {
-            $listings->where('category', $request->category);
-        }
+     // Apply category filter if provided
+     if ($request->filled('category')) {
+        $listings->where('category', $request->category);
+    }
 
-        if ($request->filled('search')) {
-            $searchTerm = '%' . $request->search . '%';
-            $listings->where(function ($query) use ($searchTerm) {
-                $query->where('title', 'like', $searchTerm)
-                      ->orWhere('city', 'like', $searchTerm)
-                      ->orWhere('state', 'like', $searchTerm)
-                      ->orWhere('address', 'like', $searchTerm);
-            });
+    // Apply search filter if provided
+    if ($request->filled('search')) {
+        $searchTerm = '%' . $request->search . '%';
+        $listings->where(function ($query) use ($searchTerm) {
+            $query->where('title', 'like', $searchTerm)
+                ->orWhere('city', 'like', $searchTerm)
+                ->orWhere('state', 'like', $searchTerm)
+                ->orWhere('description', 'like', $searchTerm);
+        });
+    }
+
+    // Apply sorting if provided
+    if ($request->filled('sort')) {
+        switch ($request->sort) {
+            case 'price_asc':
+                $listings->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $listings->orderBy('price', 'desc');
+                break;
+            case 'area_asc':
+                $listings->orderBy('area', 'asc');
+                break;
+            case 'area_desc':
+                $listings->orderBy('area', 'desc');
+                break;
+            // Add more sorting options as needed
         }
+    }
+
 
         $listings = $listings->paginate(6);
 
