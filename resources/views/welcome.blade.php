@@ -41,9 +41,8 @@
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>      
         </div>
     </header>
+    <section class="relative h-[600px] bg-cover bg-center" style="background-image: url({{ asset('images/home.jpg') }});">
 
-
-    <section class="relative h-[600px] bg-cover bg-center" style="background-image: url('{{ asset('images/home.jpg') }}');">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="relative z-10 text-center text-white flex flex-col justify-center items-center h-full">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">Find Your Dream Home</h1>

@@ -67,36 +67,62 @@
     </div>
 
     <script>
-   document.getElementById('bulkDeleteForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+document.addEventListener("DOMContentLoaded", function () {
+    const selectAllCheckbox = document.getElementById("selectAll");
+    const inquiryCheckboxes = document.querySelectorAll(".inquiry-checkbox");
 
-    const selectedInquiries = [];
-    document.querySelectorAll('.inquiry-checkbox:checked').forEach(function(checkbox) {
-        selectedInquiries.push(checkbox.value);
+    // Toggle all checkboxes when "Select All" is clicked
+    selectAllCheckbox.addEventListener("change", function () {
+        inquiryCheckboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
     });
 
-    if (selectedInquiries.length === 0) {
-        alert('Please select at least one inquiry to delete.');
-        return;
-    }
-
-    console.log('Selected inquiries:', selectedInquiries); // Debugging
-
-    // Remove any existing hidden inputs
-    document.querySelectorAll('#bulkDeleteForm input[name="inquiries[]"]').forEach(input => input.remove());
-
-    // Add selected inquiries as hidden inputs
-    selectedInquiries.forEach(id => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = 'inquiries[]';
-        input.value = id;
-        document.getElementById('bulkDeleteForm').appendChild(input);
+    // If any checkbox is unchecked, uncheck "Select All"
+    inquiryCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", function () {
+            if (!this.checked) {
+                selectAllCheckbox.checked = false;
+            } else {
+                // Check if all checkboxes are checked
+                if (document.querySelectorAll('.inquiry-checkbox:checked').length === inquiryCheckboxes.length) {
+                    selectAllCheckbox.checked = true;
+                }
+            }
+        });
     });
 
-    this.submit();
+    // Bulk delete form submission
+    document.getElementById('bulkDeleteForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const selectedInquiries = [];
+        document.querySelectorAll('.inquiry-checkbox:checked').forEach(function(checkbox) {
+            selectedInquiries.push(checkbox.value);
+        });
+
+        if (selectedInquiries.length === 0) {
+            alert('Please select at least one inquiry to delete.');
+            return;
+        }
+
+        console.log('Selected inquiries:', selectedInquiries); // Debugging
+
+        // Remove any existing hidden inputs
+        document.querySelectorAll('#bulkDeleteForm input[name="inquiries[]"]').forEach(input => input.remove());
+
+        // Add selected inquiries as hidden inputs
+        selectedInquiries.forEach(id => {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'inquiries[]';
+            input.value = id;
+            document.getElementById('bulkDeleteForm').appendChild(input);
+        });
+
+        this.submit();
+    });
 });
-
 </script>
 </body>
 </html>
