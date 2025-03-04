@@ -16,35 +16,44 @@ class SubdivisionController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'sub_name' => 'required|string|max:255',
-            'sub_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
+{
+    $request->validate([
+        'sub_name' => 'required|string|max:255',
+        'sub_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
+    ]);
 
-        // Handle Image Upload
-        if ($request->hasFile('sub_image')) {
-            $imagePath = $request->file('sub_image')->store('subdivision_images', 'public');
-        } else {
-            $imagePath = null;
+    // Handle Image Upload
+    $imagePath = $request->hasFile('sub_image') 
+        ? $request->file('sub_image')->store('subdivision_images', 'public') 
+        : null;
+
+    // Count total blocks added in the request
+    $totalBlocks = isset($request->blocks) ? count($request->blocks) : 0;
+    
+ // Count total houses across all blocks
+        $totalHouses = 0;
+        foreach ($request->blocks ?? [] as $block) {
+            $totalHouses += isset($block['houses']) ? count($block['houses']) : 0;
         }
 
-        // Get last block number in DB
-        $lastBlock = Subdivision::orderBy('block_number', 'desc')->first();
-        $nextBlockNumber = $lastBlock ? $lastBlock->block_number + 1 : 1;
+    // Store Subdivision Data
+    $subdivision = Subdivision::create([
+        'sub_name' => $request->sub_name,
+        'image' => $imagePath,
+        'block_number' => $totalBlocks, // Store total number of blocks
+        'block_area' => 0,
+        'house_number' => $totalHouses, // Store total number of houses
+        'house_area' => 0,
+        'house_status' => 'Available'
+    ]);
 
-        // Store Subdivision Data
-        $subdivision = Subdivision::create([
-            'sub_name' => $request->sub_name,
-            'image' => $imagePath,
-            'block_number' => $nextBlockNumber,
-            'block_area' => 0,  // Default, update dynamically if needed
-            'house_number' => 0, // Default, update dynamically
-            'house_area' => 0,   // Default
-            'house_status' => 'Available'
-        ]);
+    return redirect()->back()->with('success', 'Subdivision created successfully!');
+}
+public function show()
+{
+    $subdivisions = Subdivision::all();
+    return view('subdivisions', compact('subdivisions'));
+}
 
-        return redirect()->back()->with('success', 'Subdivision created successfully!');
-    }
 }
 

@@ -85,3 +85,4 @@ Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
 
 Route::get('/create_subdivision', [SubdivisionController::class, 'index']);
 Route::post('/store_subdivision', [SubdivisionController::class, 'store'])->name('subdivision.store');
+Route::get('/subdivisions', [SubdivisionController::class, 'show'])->name('subdivision.show');

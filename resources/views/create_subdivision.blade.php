@@ -33,49 +33,46 @@
     </div>
     
     <script>
-document.getElementById('add-block').addEventListener('click', function() {
-    const blockContainer = document.getElementById('blocks-container');
-    
-    let blocks = blockContainer.children.length;
-    console.log("Total existing blocks:", blocks); // Debugging line
-    
-    let blockIndex = blocks -1;
-    console.log("New block index:", blockIndex); // Debugging line
+document.addEventListener('DOMContentLoaded', function() { 
+    let blockCount = 0; // Track blocks manually
+
+    document.getElementById('add-block').addEventListener('click', function() {
+        const blockContainer = document.getElementById('blocks-container');
+
+        blockCount++; // Increment manually
+        console.log("New block index:", blockCount);
 
         const blockDiv = document.createElement('div');
         blockDiv.classList.add('block', 'p-4', 'border', 'mb-4');
         blockDiv.innerHTML = `
-            <h3 class="text-lg font-bold">Block ${blockIndex }</h3>
-            <input type="hidden" name="blocks[${blockIndex}][block_number]" value="${blockIndex}">
-            
-            <!-- Block Area Input -->
+            <h3 class="text-lg font-bold">Block ${blockCount}</h3>
+            <input type="hidden" name="blocks[${blockCount}][block_number]" value="${blockCount}">
+
             <label class="block text-gray-700 font-bold mt-2">Block Area (sq meters)</label>
-            <input type="number" name="blocks[${blockIndex}][block_area]" class="w-full border rounded py-2 px-3 mb-2" required>
+            <input type="number" name="blocks[${blockCount}][block_area]" class="w-full border rounded py-2 px-3 mb-2" required>
 
             <div class="houses-container mb-2"></div>
-            <button type="button" class="add-house bg-gray-500 text-white px-3 py-1 rounded">Add House</button>
+            <button type="button" class="add-house bg-gray-500 text-white px-3 py-1 rounded mt-2">Add House</button>
         `;
 
         blockContainer.appendChild(blockDiv);
 
+        // Enable "Add House" button for this block
         blockDiv.querySelector('.add-house').addEventListener('click', function() {
             const houseContainer = blockDiv.querySelector('.houses-container');
-            const houseIndex = houseContainer.children.length;
+            const houseIndex = houseContainer.children.length + 1;
 
             const houseDiv = document.createElement('div');
             houseDiv.classList.add('mb-2');
             houseDiv.innerHTML = `
                 <label>House Number</label>
-                <input type="text" name="blocks[${blockIndex}][houses][${houseIndex}][house_number]" required>
+                <input type="text" name="blocks[${blockCount}][houses][${houseIndex}][house_number]" class="border rounded px-2 py-1" required>
 
-
-                <!-- House Area Input -->
                 <label class="block text-gray-700 font-bold mt-2">House Area (sq meters)</label>
-                <input type="number" name="blocks[${blockIndex}][houses][${houseIndex}][house_area]" class="w-full border rounded py-2 px-3" required>
+                <input type="number" name="blocks[${blockCount}][houses][${houseIndex}][house_area]" class="w-full border rounded py-2 px-3" required>
 
-                <!-- House Status Dropdown -->
                 <label class="block text-gray-700 font-bold mt-2">House Status</label>
-                <select name="blocks[${blockIndex}][houses][${houseIndex}][house_status]" class="w-full border rounded py-2 px-3" required>
+                <select name="blocks[${blockCount}][houses][${houseIndex}][house_status]" class="w-full border rounded py-2 px-3" required>
                     <option value="Available">Available</option>
                     <option value="Reserved">Reserved</option>
                 </select>
@@ -84,6 +81,8 @@ document.getElementById('add-block').addEventListener('click', function() {
             houseContainer.appendChild(houseDiv);
         });
     });
+});
+
     </script>
 </body>
 </html>
