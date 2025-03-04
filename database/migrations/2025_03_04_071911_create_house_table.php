@@ -9,12 +9,10 @@ return new class extends Migration {
     {
         Schema::create('houses', function (Blueprint $table) {
             $table->id(); // house_id (Primary Key)
-            $table->unsignedBigInteger('id'); // Foreign key to link with subdivisions
             $table->decimal('house_price', 10, 2); // House price
             $table->decimal('house_area', 10, 2); // House area in sq meters
             $table->timestamps();
 
-            $table->foreign('id')->references('id')->on('subdivisions')->onDelete('cascade');
         });
     }
 
