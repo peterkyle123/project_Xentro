@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::create('ngh', function (Blueprint $table) {
             $table->id();  // Auto-incrementing primary key
             $table->string('sub_name')->nullable();  // sudivision name
-            $table->integer('number_of_houses');  // Total houses
             $table->decimal('price', 10, 2)->nullable();  // Price range
             $table->string('image')->nullable();  // Image path
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AboutUsAdminController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\SubdivisionController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LogoutController;
 
@@ -81,3 +82,6 @@ Route::get('/ngh-subdivision', function () {
     return view('NGH_sud');
 });
 Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
+
+Route::get('/create_subdivision', [SubdivisionController::class, 'index']);
+Route::post('/store_subdivision', [SubdivisionController::class, 'store'])->name('subdivision.store');

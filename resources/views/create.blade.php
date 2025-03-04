@@ -54,8 +54,8 @@
             <label for="housing_type" class="block text-gray-700 text-sm font-bold mb-2">Housing Type</label>
             <select name="housing_type" id="housing_type" class="w-full border rounded py-2 px-3">
                 <option value="">Select Housing Type</option>
-                <option value="Office Property">Office Property</option>
-                <option value="Residential">Residential</option>
+                <option value="Office Property">Packet Subdivision</option>
+                <option value="Residential">Residential Lot</option>
                 <option value="Other">Other</option>
             </select>
         </div>

@@ -20,7 +20,7 @@
         <h2 class="text-3xl font-bold text-gray-800">About NGH Subdivision</h2>
         <p class="mt-4 text-gray-600">
             NGH Subdivision offers a serene and secure environment for families looking for their dream home. 
-            Located in a prime areas, it features modern amenities and a well-planned community layout.
+            Located in prime areas, it features modern amenities and a well-planned community layout.
         </p>
     </section>
 
@@ -38,24 +38,13 @@
         </div>
     </section>
 
-    <!-- Sites Section -->
     <section class="py-12 px-6 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold text-gray-800 text-center">Nearby Sites</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            <a href="#" class="block relative group">
-                <img src="{{ asset('images/site1.jpg') }}" alt="Site 1" class="rounded-lg shadow-md group-hover:opacity-75 transition-opacity">
-                <p class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-3 py-1 rounded">Site 1</p>
-            </a>
-            <a href="#" class="block relative group">
-                <img src="{{ asset('images/site2.jpg') }}" alt="Site 2" class="rounded-lg shadow-md group-hover:opacity-75 transition-opacity">
-                <p class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-3 py-1 rounded">Site 2</p>
-            </a>
-            <a href="#" class="block relative group">
-                <img src="{{ asset('images/site3.jpg') }}" alt="Site 3" class="rounded-lg shadow-md group-hover:opacity-75 transition-opacity">
-                <p class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-3 py-1 rounded">Site 3</p>
-            </a>
-        </div>
-    </section>
+    <div class="max-w-6xl mx-auto px-6">
+    <a href="#" class="hover:text-blue-700 text-blue-500 font-bold">
+    Inquire Now
+</a>
+    </div>
+</section>
 
     <!-- Amenities Section -->
     <section class="py-12 px-6 max-w-5xl mx-auto">
@@ -82,21 +71,11 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="py-12 px-6 max-w-5xl mx-auto">
-        <h2 class="text-3xl font-bold text-gray-800">Get in Touch</h2>
-        <p class="mt-4 text-gray-600">For inquiries, visit our office or contact us:</p>
-        <p class="mt-2 font-semibold">📞 Contact Number: +63 912 345 6789</p>
-        <p class="font-semibold">📍 Address: NGH Subdivision, City, Philippines</p>
-    </section>
-       <!-- Hero Section -->
-       <section class="relative h-[500px] bg-cover bg-center flex items-center justify-center text-white text-center" 
-        style="background-image: url('{{ asset('images/home.jpg') }}'); background-size: cover; background-position: center;">
-        <div class="bg-black bg-opacity-30 p-6 rounded-lg backdrop-blur-sm">
-            <h1 class="text-4xl font-bold">Welcome to NGH Subdivision</h1>
-            <p class="text-lg mt-2">A premier community designed for comfort, security, and modern living.</p>
-        </div>
-    </section>
+    <section class="relative h-[400px] bg-cover bg-center flex items-center justify-center text-white text-center" 
+         style="background-image: url('{{ asset('images/home.jpg') }}'); background-size: cover; background-position: center;">
+    <div class="bg-opacity-30 p-6">
+    </div>
+</section>
 
     <!-- About Section -->
     <section class="py-12 px-6 max-w-5xl mx-auto">
