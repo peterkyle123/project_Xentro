@@ -22,6 +22,7 @@
     <nav class="flex items-center space-x-4">
         <a href="/" class="hover:text-orange-950">Website</a>
         <a href="/ngh-subdivision" class="hover:text-orange-950">NGH Subdivision</a>
+        <a href="/create-team" class="hover:text-orange-950">Team</a>
         <a href="/admin/listings" class="hover:text-orange-950">Listings</a>
         <a href="/admin/inquiries" class="hover:text-orange-950">Inquiries</a>
         <a href="/admin-edit" class="hover:text-orange-950">Account</a>

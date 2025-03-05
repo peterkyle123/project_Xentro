@@ -23,7 +23,7 @@
                 <a href="/ngh-subdivision" class="text-gray-700 hover:text-orange-500 transition duration-300">NGH Subdivision</a>
                 <a href="user-listings1" class="text-gray-700 hover:text-orange-500 transition duration-300">Properties</a>
                 <a href="/about" class="text-gray-700 hover:text-orange-500 transition duration-300">About Us</a>
-                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Contact</a>
+                <a href="/contact" class="text-gray-700 hover:text-orange-500 transition duration-300">Contact</a>
             </nav>
 
             <!-- Mobile Menu Button -->
@@ -37,9 +37,9 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden flex flex-col bg-white shadow-md absolute w-full left-0 top-full z-50">
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Home</a>
-            <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Properties</a>
+            <a href="user-listings1" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Properties</a>
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">About Us</a>
-            <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>      
+            <a href="/contact" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>      
         </div>
     </header>
     <section class="relative h-[600px] bg-cover bg-center" style="background-image: url({{ asset('images/home.jpg') }});">
@@ -104,13 +104,13 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-semibold mb-8">Contact Us</h2>
             <p class="text-gray-700 mb-8">Have questions? Contact us today to learn more about our properties and services.</p>
-            <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-8 rounded-full transition duration-300">Contact Us</a>
+            <a href="/contact" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-8 rounded-full transition duration-300">Contact Us</a>
         </div>
     </section>
 
     <footer class="bg-yellow-800 text-white py-8">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; {{ date('Y') }} Your Real Estate. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} Xentro Estates Properties. All rights reserved.</p>
         </div>
     </footer>
     <script>
