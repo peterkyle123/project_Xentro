@@ -84,7 +84,7 @@ Route::get('/ngh-subdivision', function () {
 Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
 
 Route::get('/create_subdivision', [SubdivisionController::class, 'index']);
-Route::post('/store_subdivision', [SubdivisionController::class, 'store'])->name('subdivision.store');
+Route::post('/store_subdivision', [SubdivisionController::class, 'store'])->name('store_subdivision');
 Route::get('/subdivisions', [SubdivisionController::class, 'show'])->name('subdivision.show');
 // contact_info
 Route::get('/contact', function () {

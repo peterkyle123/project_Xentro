@@ -23,43 +23,58 @@ class SubdivisionController extends Controller
             'sub_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
         ]);
     
-        $imagePath = $request->file('sub_image')->store('subdivision_images', 'public');
+        // Handle Image Upload
+        $imagePath = $request->hasFile('sub_image')
+            ? $request->file('sub_image')->store('subdivision_images', 'public')
+            : null;
     
         $totalBlocks = isset($request->blocks) ? count($request->blocks) : 0;
         $totalHouses = 0;
     
-        foreach ($request->blocks ?? [] as $blockIndex => $block) {
-            $houseNumbers = [];
-    
-            foreach ($block['houses'] ?? [] as $houseIndex => $house) {
-                $assignedHouseNumber = $house['assigned_house_number'] ?? null;
-    
-                // Check for duplicate assigned_house_number within the same block
-                if (in_array($assignedHouseNumber, $houseNumbers)) {
-                    return redirect()->back()->withErrors([
-                        "blocks.$blockIndex.houses.$houseIndex.assigned_house_number" =>
-                            "Duplicate assigned house number '{$assignedHouseNumber}' in Block " . ($blockIndex + 1) . "."
-                    ])->withInput();
-                }
-    
-                $houseNumbers[] = $assignedHouseNumber;
-                $totalHouses++;
-            }
-        }
-    
+        // Store Subdivision Data
         $subdivision = Subdivision::create([
             'sub_name' => $request->sub_name,
             'image' => $imagePath,
             'block_number' => $totalBlocks,
             'block_area' => 0,
-            'house_number' => $totalHouses,
+            'house_number' => 0, // Initialize to 0, will update later
             'house_area' => 0,
             'house_status' => 'Available'
         ]);
     
-        return redirect()->back()->with('success', 'Subdivision created successfully!');
-    }
+        foreach ($request->blocks ?? [] as $blockIndex => $block) {
+            $houseNumbers = [];
     
+            foreach ($block['houses'] ?? [] as $houseIndex => $house) {
+                $houseNumber = $house['house_number'] ?? null;
+    
+                if (in_array($houseNumber, $houseNumbers)) {
+                    return redirect()->back()->withErrors([
+                        "blocks.$blockIndex.houses.$houseIndex.house_number" =>
+                        "Duplicate house number '{$houseNumber}' in Block " . ($blockIndex ) . "."
+                    ])->withInput();
+                }
+    
+                $houseNumbers[] = $houseNumber;
+    
+                // Create House record
+                House::create([
+                    'subdivision_id' => $subdivision->id,
+                    'block_number' => $blockIndex + 1,
+                    'house_number' => $houseNumber,
+                    'house_area' => $house['house_area'] ?? 0,
+                    'house_status' => $house['house_status'] ?? 'Available',
+                    'assigned_house_number' => (int) $houseNumber, // Ensure it's an integer
+                ]);
+                $totalHouses++;
+            }
+        }
+    
+        // Update subdivision house_number
+        $subdivision->update(['house_number' => $totalHouses]);
+    
+        return redirect()->back()->with('success', 'Subdivision and houses created successfully!');
+    }
 
 public function show()
 {
