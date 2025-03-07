@@ -17,61 +17,75 @@ class SubdivisionController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'sub_name'   => 'required|string|max:255',
-            'sub_image'  => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
+{
+    $request->validate([
+        'sub_name'   => 'required|string|max:255',
+        'sub_image'  => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
+    ]);
 
-        // Handle Image Upload
-        $imagePath = $request->hasFile('sub_image')
-            ? $request->file('sub_image')->store('subdivision_images', 'public')
-            : null;
+    // Handle Image Upload
+    $imagePath = $request->hasFile('sub_image')
+        ? $request->file('sub_image')->store('subdivision_images', 'public')
+        : null;
 
-        $totalBlocks = is_array($request->blocks) ? count($request->blocks) : 0;
+    $totalBlocks = is_array($request->blocks) ? count($request->blocks) : 0;
 
-        // Create subdivision
-        $subdivision = Subdivision::create([
-            'sub_name'     => $request->sub_name,
-            'image'        => $imagePath,
-            'block_number' => $totalBlocks, // Store total blocks
-            'house_number' => 0, // Will be updated later
-            'house_area'   => 0,
-            'house_status' => 'Available'
-        ]);
+    // **Step 1: Check for Duplicate Assigned House Numbers in the Same Block**
+    foreach ($request->blocks ?? [] as $block) {
+        $seenHouseNumbers = [];
 
-        $totalHouses = 0; // Initialize total houses
+        foreach ($block['houses'] ?? [] as $house) {
+            $houseNumber = (int) $house['house_number'];
 
-        // Loop through blocks and store in `blocks` table
-        foreach ($request->blocks ?? [] as $block) {
-            $blockRecord = Block::create([
-                'subdivision_id' => $subdivision->id,
-                'block_area'     => $block['block_area'],
-            ]);
-
-            // Check if the 'houses' array exists and is not empty
-            if (!empty($block['houses']) && is_array($block['houses'])) {
-                foreach ($block['houses'] as $house) {
-                    House::create([
-                        'subdivision_id' => $subdivision->id,
-                        'block_id'       => $blockRecord->id, // Correct foreign key reference
-                        'house_area'     => $house['house_area'],
-                        'house_price'    => $house['house_price'],
-                        'assigned_house_number' => (int) $house['house_number'],
-                        'house_status'   => $house['house_status'],
-                    ]);
-
-                    $totalHouses++; // Increment house count correctly
-                }
+            // Check for duplicate in the request data
+            if (in_array($houseNumber, $seenHouseNumbers)) {
+                return redirect()->back()
+                    ->withErrors(["Duplicate assigned house number ($houseNumber) in the same block."])
+                    ->withInput();
             }
+
+            // Store house number to track duplicates in this block
+            $seenHouseNumbers[] = $houseNumber;
         }
-
-        // Ensure `house_number` updates correctly in the `ngh` table
-        $subdivision->update(['house_number' => $totalHouses]);
-
-        return redirect()->back()->with('success', 'Subdivision, blocks, and houses created successfully!');
     }
 
+    // **Step 2: If No Duplicates Found, Proceed with Saving Everything**
+    $subdivision = Subdivision::create([
+        'sub_name'     => $request->sub_name,
+        'image'        => $imagePath,
+        'block_number' => $totalBlocks,
+        'house_number' => 0, // Will be updated later
+        'house_area'   => 0,
+        'house_status' => 'Available'
+    ]);
+
+    $totalHouses = 0;
+
+    foreach ($request->blocks ?? [] as $block) {
+        $blockRecord = Block::create([
+            'subdivision_id' => $subdivision->id,
+            'block_area'     => $block['block_area'],
+        ]);
+
+        foreach ($block['houses'] ?? [] as $house) {
+            House::create([
+                'subdivision_id' => $subdivision->id,
+                'block_id'       => $blockRecord->id,
+                'house_area'     => $house['house_area'],
+                'house_price'    => $house['house_price'],
+                'assigned_house_number' => (int) $house['house_number'],
+                'house_status'   => $house['house_status'],
+            ]);
+
+            $totalHouses++;
+        }
+    }
+
+    // Update total houses in subdivision
+    $subdivision->update(['house_number' => $totalHouses]);
+
+    return redirect()->back()->with('success', 'Subdivision, blocks, and houses created successfully!');
+}
 public function show($id)
 {
     $subdivision = Subdivision::with('houses')->findOrFail($id);
