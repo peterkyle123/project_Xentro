@@ -20,7 +20,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center mb-4">
             <div>
                 <h1 class="text-2xl font-semibold mb-2">Listings</h1>
-                <a href="/#">
+                <a href="/">
                     <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded">
                         Back to Home
                     </button>

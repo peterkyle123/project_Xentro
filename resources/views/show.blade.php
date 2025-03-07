@@ -6,103 +6,45 @@
   <title>Listing Details - {{ $listing->title }}</title>
   @vite('resources/css/app.css')
   @vite('resources/js/app.js')
+  <style>
+    .overlay {
+      background: rgba(0, 0, 0, 0.3); /* Lower opacity for clearer background */
+      backdrop-filter: blur(5px);
+      padding: 40px;
+      color: white;
+      text-align: left; /* Align text to the left */
+      max-width: 600px;
+      margin-left: 50px; /* Adjusted position to the left */
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
-  <div class="container mx-auto p-6">
-    <h1 class="text-3xl font-semibold mb-8 text-center md:text-left">Listing Details</h1>
-
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden p-8">
-
-      @if ($listing->image)
-        <!-- Use max-h-96 and object-contain to preserve aspect ratio -->
-        <img src="{{ asset('storage/' . $listing->image) }}" alt="{{ $listing->title }}" class="w-full max-h-96 object-contain rounded-t-2xl mb-8">
-      @endif
-
-      <h2 class="text-3xl font-semibold mb-6 text-center md:text-left">{{ $listing->title }}</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-        <div>
-          <p class="mb-4"><strong class="font-medium text-lg text-gray-800">Description:</strong> {{ $listing->description }}</p>
-          <p class="mb-4"><strong class="font-medium text-lg text-gray-800">Type:</strong>
-                @if ($listing->type === 'sale')
-                    Sale
-                @elseif ($listing->type === 'lease')
-                    Lease
-                @elseif ($listing->type === 'rent')
-                    Rent
-                @else
-                    {{ $listing->type }}
-                @endif
-            </p>
-          <p class="mb-4"><strong class="font-medium text-lg text-gray-800">Price:</strong> ₱{{ number_format($listing->price) }}</p>
-          <p class="mb-4"><strong class="font-medium text-lg text-gray-800">Address:</strong> {{ $listing->address }}</p>
-          <p class="mb-4"><strong class="font-medium text-lg text-gray-800">City:</strong> {{ $listing->city }}</p>
-          <p class="mb-4"><strong class="font-medium text-lg text-gray-800">State:</strong> {{ $listing->state }}</p>
-          <p class="mb-4"><strong class="font-medium text-lg text-gray-800">Zip:</strong> {{ $listing->zip }}</p>
-        </div>
-        <div>
-          <div class="flex items-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 19v-7" />
-            </svg>
-            @if ($listing->category !== 'Land') 
-            <p class="mb-2"><strong>Bathrooms:</strong> {{ $listing->bedrooms }}</p>
+  <div class="relative min-h-screen bg-cover bg-center flex items-center" style="background-image: url('{{ asset('storage/' . $listing->image) }}');">
+    <!-- <div class="absolute inset-0 bg-black bg-opacity-50"></div> Reduced opacity for clearer image -->
+    <div class="overlay relative z-10">
+      <h1 class="text-4xl font-bold mb-4">{{ $listing->title }}</h1>
+      <p class="text-lg mb-4">{{ $listing->description }}</p>
+      <p class="text-lg"><strong>Price:</strong> ₱{{ number_format($listing->price) }}</p>
+      <p class="text-lg"><strong>Type:</strong> 
+        @if ($listing->type === 'sale') Sale 
+        @elseif ($listing->type === 'lease') Lease 
+        @elseif ($listing->type === 'rent') Rent 
+        @else {{ $listing->type }} 
         @endif
-          </div>
-          <div class="flex items-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-            </svg>
-            @if ($listing->category !== 'Land') 
-            <p class="mb-2"><strong>Bathrooms:</strong> {{ $listing->bathrooms }}</p>
-        @endif
-          </div>
-          <div class="flex items-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-            </svg>
-            <p class="text-lg"><strong class="font-medium text-gray-800">Area:</strong> {{ $listing->area }} sqft</p>
-          </div>
-          <p class="mb-4 text-lg"><strong class="font-medium text-gray-800">Status:</strong> {{ $listing->status }}</p>
-          <p class="mb-4 text-lg"><strong class="font-medium text-gray-800">Created At:</strong> {{ $listing->created_at }}</p>
-          <p class="mb-4 text-lg"><strong class="font-medium text-gray-800">Updated At:</strong> {{ $listing->updated_at }}</p>
-        </div>
-      </div>
-   
-     {{-- Map (if location data) --}}
-      <div class="mb-10">
-          <p class="mb-4 text-lg">
-              <strong class="font-medium text-gray-800">Latitude:</strong> <span id="display-latitude">{{ $listing->latitude }}</span>
-          </p>
-          <p class="mb-4 text-lg">
-              <strong class="font-medium text-gray-800">Longitude:</strong> <span id="display-longitude">{{ $listing->longitude }}</span>
-          </p>
-      </div>
-      <div class="mb-4">
-          <a href="#" id="google-maps-link" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded">View on Google Maps</a>
-      </div>
-
-            {{-- Contact/Inquiry Form --}}
-            <div class="mb-10">
-                {{-- Implement contact form here --}}
-                <div class="bg-gray-100 p-6 rounded-lg">
-                    Contact Form Placeholder
-                </div>
-            </div>
-
-            {{-- Social Sharing Buttons --}}
-            <div class="mb-10">
-                {{-- Implement social sharing buttons here --}}
-                Social Sharing Buttons Placeholder
-            </div>
-
-      <div class="text-center md:text-left">
-        <a href="{{ route('admin.listings.index') }}" class="inline-flex items-center bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-6 rounded-full font-semibold transition-colors duration-300 shadow-md hover:shadow-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+      </p>
+      <p class="text-lg"><strong>Address:</strong> {{ $listing->address }}, {{ $listing->city }}, {{ $listing->state }}, {{ $listing->zip }}</p>
+      <p class="text-lg"><strong>Area:</strong> {{ $listing->area }} sqft</p>
+      <p class="text-lg"><strong>Status:</strong> {{ $listing->status }}</p>
+  <div class="mb-4">
+    <a href="#" id="google-maps-link" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600 hover:text-blue-700" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
           </svg>
-          Back to Listings
-        </a>
+      </a>
+</div>
+      <div class="mt-6">
+        <a href="{{ route('admin.listings.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-6 rounded-full font-semibold shadow-md">Back to Listings</a>
       </div>
     </div>
   </div>
@@ -120,5 +62,6 @@
         }
     });
   </script>
+
 </body>
 </html>

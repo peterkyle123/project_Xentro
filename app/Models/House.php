@@ -11,8 +11,11 @@ class House extends Model
 
     protected $fillable = [
         'subdivision_id',
-        'house_price',
+        'block_id',
+        'house_number',
         'house_area',
+        'house_price',
+        'house_status',
         'assigned_house_number',
     ];
 

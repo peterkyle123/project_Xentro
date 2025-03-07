@@ -9,11 +9,15 @@ class Subdivision extends Model
 {
     use HasFactory;
 
-    protected $table = 'ngh'; // Explicitly set the table
+    protected $table = 'ngh'; // Explicitly setting the table name
 
-    protected $fillable = [
-        'sub_name', 'price', 'image',
-        'block_number', 'block_area', 'house_number',
-        'house_area', 'house_status'
-    ];
+    protected $fillable = ['sub_name', 'image', 'block_number', 'house_number', 'house_area', 'house_status'];
+
+
+    // Relationship: One Subdivision has Many Houses
+    public function houses()
+    {
+        return $this->hasMany(House::class, 'subdivision_id');
+    }
 }
+

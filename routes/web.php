@@ -11,11 +11,12 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\SubdivisionController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\HouseController;
 
 Route::get('/', function () {
     $featuredListings = Listing::where('is_featured', true)->get();
     // ... other logic
-    return view('welcome', compact('featuredListings'));
+    return view('welcomes', compact('featuredListings'));
 });
 
 // Admin Login
@@ -54,7 +55,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Admin Account Editing
   // Admin Account Editing
-  
+
 });
 Route::get('/admin-edit', [AdminController::class, 'edit'])->name('admin-edit');
 Route::put('/admin/update', [AdminController::class, 'update'])->name('admin.update');
@@ -84,9 +85,20 @@ Route::get('/ngh-subdivision', function () {
 Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
 
 Route::get('/create_subdivision', [SubdivisionController::class, 'index']);
-Route::post('/store_subdivision', [SubdivisionController::class, 'store'])->name('store_subdivision');
+Route::post('/subdivisions/store', [SubdivisionController::class, 'store'])->name('store_subdivision');
 Route::get('/subdivisions', [SubdivisionController::class, 'show'])->name('subdivision.show');
 // contact_info
 Route::get('/contact', function () {
     return view('contact');
 });
+// User-facing subdivisions listing
+Route::get('/subdivisions', [SubdivisionController::class, 'Userindex'])->name('subdivisions.index');
+
+// User-facing subdivision details
+Route::get('/subdivisions/{subdivision}/details', [SubdivisionController::class, 'details'])->name('subdivisions.details');
+Route::get('/subdivisions/{id}', [SubdivisionController::class, 'show'])->name('subdivisions.show');
+// Route::get('/admin/houses/blocks/{subdivision}', [HouseController::class, 'blocks'])->name('admin.houses.blocks');
+// Route::get('/admin/houses/{subdivision}/{block}', [HouseController::class, 'edit'])->name('admin.houses.edit');
+// Route::get('/admin/houses/{house}/edit-form', [HouseController::class, 'editForm'])->name('admin.houses.edit-form');
+// Route::put('/admin/houses/{house}', [HouseController::class, 'update'])->name('admin.houses.update');
+// Route::get('/admin/houses', [HouseController::class, 'index'])->name('admin.houses.index');

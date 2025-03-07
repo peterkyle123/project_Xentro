@@ -24,6 +24,7 @@
                 <a href="user-listings1" class="text-gray-700 hover:text-orange-500 transition duration-300">Properties</a>
                 <a href="/about" class="text-gray-700 hover:text-orange-500 transition duration-300">About Us</a>
                 <a href="/contact" class="text-gray-700 hover:text-orange-500 transition duration-300">Contact</a>
+                <a href="/admin/houses" class="text-gray-700 hover:text-orange-500 transition duration-300">Edit Houses</a> 
             </nav>
 
             <!-- Mobile Menu Button -->
