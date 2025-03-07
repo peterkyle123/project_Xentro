@@ -88,21 +88,25 @@ class SubdivisionController extends Controller
 }
 public function show($id)
 {
-    $subdivision = Subdivision::with('houses')->findOrFail($id);
+    $subdivision = Subdivision::with(['houses' => function ($query) {
+        $query->select('id', 'block_id', 'assigned_house_number', 'house_area', 'house_status', 'house_price');
+    }])->findOrFail($id);
 
     // Extract unique blocks from houses
     $blocks = $subdivision->houses
-        ->groupBy('block_number') // Group houses by block_number
-        ->map(function ($houses, $blockNumber) {
+        ->groupBy('block_id') // Group houses by block_id
+        ->map(function ($houses, $blockId) {
             return (object) [
-                'block_number' => $blockNumber,
-                'block_area' => $houses->first()->block_area ?? 'N/A', // Blocks have the same area per group
+                'block_id' => $blockId,
+                'block_area' => $houses->first()->block_area ?? 'N/A', // Ensure block_area is retrieved
                 'houses' => $houses,
             ];
         });
 
-    return view('/details', compact('subdivision', 'blocks'));
+    return view('details', compact('subdivision', 'blocks'));
 }
+
+
 
 public function showHouses($id)
 {
