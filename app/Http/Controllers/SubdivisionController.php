@@ -253,11 +253,25 @@ public function destroy($id)
 public function destroyBlock($id)
 {
     $block = Block::findOrFail($id);
+    $subdivisionId = $block->subdivision_id; // get the subdivision id
 
     // Delete related houses first
     $block->houses()->delete();
 
     $block->delete();
+
+    // Update totals after deletion
+    $totalBlocks = Block::where('subdivision_id', $subdivisionId)->count();
+    $totalHouses = House::where('subdivision_id', $subdivisionId)->count();
+
+    // Update the subdivision record
+    $subdivision = Subdivision::find($subdivisionId);
+    if ($subdivision) {
+        $subdivision->update([
+            'block_number' => $totalBlocks,
+            'house_number' => $totalHouses,
+        ]);
+    }
 
     return redirect()->back()->with('success', 'Block deleted successfully!');
 }
@@ -265,7 +279,21 @@ public function destroyBlock($id)
 public function destroyHouse($id)
 {
     $house = House::findOrFail($id);
+    $subdivisionId = $house->subdivision_id; // get the subdivision id
+
     $house->delete();
+
+    // Update totals after deletion
+    $totalBlocks = Block::where('subdivision_id', $subdivisionId)->count();
+    $totalHouses = House::where('subdivision_id', $subdivisionId)->count();
+
+    $subdivision = Subdivision::find($subdivisionId);
+    if ($subdivision) {
+        $subdivision->update([
+            'block_number' => $totalBlocks,
+            'house_number' => $totalHouses,
+        ]);
+    }
 
     return redirect()->back()->with('success', 'House deleted successfully!');
 }

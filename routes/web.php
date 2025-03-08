@@ -103,5 +103,6 @@ Route::get('/subdivisions/edit/{id}', [SubdivisionController::class, 'edit'])->n
 Route::put('/subdivisions/update/{id}', [SubdivisionController::class, 'update'])->name('update_subdivision');
 Route::delete('/subdivisions/delete/{id}', [SubdivisionController::class, 'destroy'])->name('delete_subdivision');
 // BLOCKS AND HOUSES
-Route::delete('/blocks/delete/{id}', [SubdivisionController::class, 'destroyBlock'])->name('delete_block');
-Route::delete('/houses/delete/{id}', [SubdivisionController::class, 'destroyHouse'])->name('delete_house');
+Route::delete('/block/{id}', [SubdivisionController::class, 'destroyBlock'])->name('destroyBlock');
+Route::delete('/house/{id}', [SubdivisionController::class, 'destroyHouse'])->name('destroyHouse');
+

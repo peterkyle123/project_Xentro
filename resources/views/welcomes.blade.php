@@ -20,11 +20,11 @@
             <!-- Navigation Menu (Desktop) -->
             <nav class="hidden md:flex space-x-6">
                 <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Home</a>
-                <a href="/ngh-subdivision" class="text-gray-700 hover:text-orange-500 transition duration-300">NGH Subdivision</a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">NGH Subdivision</a>
                 <a href="user-listings1" class="text-gray-700 hover:text-orange-500 transition duration-300">Properties</a>
                 <a href="/about" class="text-gray-700 hover:text-orange-500 transition duration-300">About Us</a>
                 <a href="/contact" class="text-gray-700 hover:text-orange-500 transition duration-300">Contact</a>
-                <a href="/admin/houses" class="text-gray-700 hover:text-orange-500 transition duration-300">Edit Houses</a> 
+                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Subdivisions</a>
             </nav>
 
             <!-- Mobile Menu Button -->
@@ -40,7 +40,7 @@
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Home</a>
             <a href="user-listings1" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Properties</a>
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">About Us</a>
-            <a href="/contact" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>      
+            <a href="/contact" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>
         </div>
     </header>
     <section class="relative h-[600px] bg-cover bg-center" style="background-image: url({{ asset('images/home.jpg') }});">
@@ -56,7 +56,7 @@
     <section class="py-16">
     <div class="container mx-auto px-4">
         <h2 class="text-3xl font-semibold text-center mb-8">Featured Properties</h2>
-        
+
         @if ($featuredListings->isEmpty())
             <p class="text-center text-gray-500">No featured properties available at the moment.</p>
         @else
