@@ -23,4 +23,8 @@ class House extends Model
     {
         return $this->belongsTo(Subdivision::class);
     }
+    public function block()
+    {
+        return $this->belongsTo(Block::class);
+    }
 }

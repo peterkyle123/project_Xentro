@@ -88,20 +88,17 @@ class SubdivisionController extends Controller
 }
 public function show($id)
 {
-    $subdivision = Subdivision::with(['houses' => function ($query) {
-        $query->select('id', 'block_id', 'assigned_house_number', 'house_area', 'house_status', 'house_price');
-    }])->findOrFail($id);
+    // Retrieve subdivision along with blocks and their houses
+    $subdivision = Subdivision::with(['blocks.houses'])->findOrFail($id);
 
-    // Extract unique blocks from houses
-    $blocks = $subdivision->houses
-        ->groupBy('block_id') // Group houses by block_id
-        ->map(function ($houses, $blockId) {
-            return (object) [
-                'block_id' => $blockId,
-                'block_area' => $houses->first()->block_area ?? 'N/A', // Ensure block_area is retrieved
-                'houses' => $houses,
-            ];
-        });
+    // Extract blocks and map them with their houses
+    $blocks = $subdivision->blocks->map(function ($block) {
+        return (object) [
+            'block_id' => $block->id,  // Get block ID from the blocks table
+            'block_area' => $block->block_area ?? 'N/A',  // Get block area from blocks table
+            'houses' => $block->houses,  // Retrieve all houses for this block
+        ];
+    });
 
     return view('details', compact('subdivision', 'blocks'));
 }
@@ -115,17 +112,19 @@ public function showHouses($id)
 }
 public function details($id)
 {
-    $subdivision = Subdivision::with('houses')->findOrFail($id);
+    $subdivision = Subdivision::with(['houses', 'houses.block'])->findOrFail($id);
 
-    // Group houses by block_id (ensure block_id is set for each house)
+    // Group houses by block_id
     $blocks = $subdivision->houses
         ->groupBy('block_id')
         ->map(function ($houses, $blockId) {
+            // Get the first house's block (all houses in a group should have the same block)
+            $block = $houses->first()->block;
+
             return (object)[
-                'block_id'    => $blockId,
-                // Assuming all houses in the same block share the same block area:
-                'block_area'  => $houses->first()->block_area ?? 'N/A',
-                'houses'      => $houses,
+                'block_id'   => $blockId,
+                'block_area' => $block ? $block->block_area : 'N/A', // Access block_area from Block
+                'houses'     => $houses,
             ];
         });
 

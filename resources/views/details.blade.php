@@ -21,40 +21,32 @@
         <h2 class="text-xl font-semibold mb-2">Blocks & Houses</h2>
 
         @if ($blocks->isNotEmpty())
-            @php $blockNumber = 1; @endphp  {{-- Initialize block number --}}
-            @foreach ($blocks as $block)
-                <div class="mb-4 p-3 border rounded">
-                    <h3 class="text-lg font-bold">
-                        Block <span class="block-number">{{ $blockNumber }}</span>
-                        ({{ $block->block_area }} sq meters)
-                    </h3>
-
-                    @php $blockNumber++; @endphp {{-- Increment block number --}}
-
-                    @if ($block->houses->isNotEmpty())
-                        <ul class="mt-2">
-                            @foreach ($block->houses as $house)
-                                <li class="mb-2">
-                                    <span class="font-medium">House {{ $house->assigned_house_number }}:</span>
-                                    {{ ucfirst($house->house_status) }} -
-                                    <span class="text-green-600 font-bold">
-                                        PHP {{ number_format($house->house_price, 2) }}
-                                    </span>
-                                    <br>
-                                    <span class="font-medium">House Area:</span>
-                                    {{ $house->house_area ? $house->house_area . ' sq meters' : 'N/A' }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <p class="text-gray-500">No houses available in this block.</p>
-                    @endif
-                </div>
-            @endforeach
-        @else
-            <p class="text-gray-500">No blocks available in this subdivision.</p>
-        @endif
-    </div>
+        @php $blockNumber = 1; @endphp
+        @foreach ($blocks as $block)
+            <div class="mb-4 p-3 border rounded">
+                <h3 class="text-lg font-bold">
+                    Block {{ $blockNumber++ }} ({{ $block->block_area }} sq meters)
+                </h3>
+                @if ($block->houses->isNotEmpty())
+                    <ul class="mt-2">
+                        @foreach ($block->houses as $house)
+                            <li class="mb-2">
+                                <span class="font-medium">House {{ $house->assigned_house_number }}:</span>
+                                {{ ucfirst($house->house_status) }} -
+                                <span class="text-green-600 font-bold">
+                                    PHP {{ number_format($house->house_price, 2) }}
+                                </span>
+                                <br>
+                                <span class="font-medium">House Area:</span> {{ $house->house_area }} sq meters
+                            </li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="text-gray-500">No houses available in this block.</p>
+                @endif
+            </div>
+        @endforeach
+    @endif
 
     <a href="{{ route('subdivisions.index') }}"
        class="mt-6 inline-block bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded">

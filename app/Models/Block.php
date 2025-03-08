@@ -18,5 +18,9 @@ class Block extends Model
     {
         return $this->belongsTo(Subdivision::class);
     }
+    public function houses()
+{
+    return $this->hasMany(House::class);
+}
 }
 

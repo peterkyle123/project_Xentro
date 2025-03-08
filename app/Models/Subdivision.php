@@ -17,7 +17,11 @@ class Subdivision extends Model
     // Relationship: One Subdivision has Many Houses
     public function houses()
     {
-        return $this->hasMany(House::class, 'subdivision_id');
+        return $this->hasMany(House::class);
+    }
+    public function blocks()
+    {
+        return $this->hasMany(Block::class);
     }
 }
 
