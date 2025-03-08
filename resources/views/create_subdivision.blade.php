@@ -67,10 +67,10 @@
           <input type="hidden" name="blocks[${blockCount}][block_number]" value="${blockCount}">
 
           <label class="block text-gray-700 font-bold mt-2">Block Area (sq meters)</label>
-          <input type="number" name="blocks[${blockCount}][block_area]" class="w-full border rounded py-2 px-3 mb-2" required>
+          <input type="number" name="blocks[${blockCount}][block_area]" class="w-full border rounded py-2 px-3 mb-2" step="any" required>
 
           <div class="houses-container mb-2"></div>
-          <button type="button" class="add-house bg-gray-500 text-white px-3 py-1 rounded mt-2">Add House</button>
+          <button type="button" class="add-house bg-gray-500 text-white px-3 py-1 rounded mt-2">Add Lot</button>
         `;
         blockContainer.appendChild(blockDiv);
 
@@ -82,19 +82,19 @@
           const houseDiv = document.createElement('div');
           houseDiv.classList.add('mb-2');
           houseDiv.innerHTML = `
-            <label>House Number</label>
+            <label>Lot Number</label>
             <input type="text" name="blocks[${blockCount}][houses][${houseIndex}][house_number]" class="border rounded px-2 py-1" required>
 
             <!-- Hidden input to store block_id (auto-assigned) -->
             <input type="hidden" name="blocks[${blockCount}][houses][${houseIndex}][block_id]" value="${blockCount}">
 
-            <label class="block text-gray-700 font-bold mt-2">House Area (sq meters)</label>
-            <input type="number" name="blocks[${blockCount}][houses][${houseIndex}][house_area]" class="w-full border rounded py-2 px-3" required>
+            <label class="block text-gray-700 font-bold mt-2">Lot Area (sq meters)</label>
+            <input type="number" name="blocks[${blockCount}][houses][${houseIndex}][house_area]" class="w-full border rounded py-2 px-3" step="any" min="0" required>
 
-            <label class="block text-gray-700 font-bold mt-2">House Price (PHP)</label>
-            <input type="number" name="blocks[${blockCount}][houses][${houseIndex}][house_price]" class="w-full border rounded py-2 px-3" min="0" required>
+            <label class="block text-gray-700 font-bold mt-2">Lot Price (PHP)</label>
+            <input type="number" name="blocks[${blockCount}][houses][${houseIndex}][house_price]" class="w-full border rounded py-2 px-3" min="0" step="any" min="0" required>
 
-            <label class="block text-gray-700 font-bold mt-2">House Status</label>
+            <label class="block text-gray-700 font-bold mt-2">Lot Status</label>
             <select name="blocks[${blockCount}][houses][${houseIndex}][house_status]" class="w-full border rounded py-2 px-3" required>
               <option value="Available">Available</option>
               <option value="Reserved">Reserved</option>

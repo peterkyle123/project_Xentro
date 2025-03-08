@@ -24,6 +24,16 @@
                     <a href="{{ route('subdivisions.details', $subdivision) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
                         View Details
                     </a>
+                    <a href="{{ route('edit_subdivision', $subdivision->id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
+                        Edit
+                    </a>
+                    <form action="{{ route('delete_subdivision', $subdivision->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this subdivision? This action cannot be undone.')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
+                            Delete
+                        </button>
+                    </form>
                 </div>
             </div>
         @endforeach

@@ -21,6 +21,8 @@ class SubdivisionController extends Controller
     $request->validate([
         'sub_name'   => 'required|string|max:255',
         'sub_image'  => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
+        'blocks.*.houses.*.house_area' => 'required|numeric',
+        'blocks.*.houses.*.house_price' => 'required|numeric|min:0',
     ]);
 
     // Handle Image Upload
@@ -84,24 +86,24 @@ class SubdivisionController extends Controller
     // Update total houses in subdivision
     $subdivision->update(['house_number' => $totalHouses]);
 
-    return redirect()->back()->with('success', 'Subdivision, blocks, and houses created successfully!');
+    return redirect()->back()->with('success', 'Subdivision, blocks, and lots created successfully!');
 }
-public function show($id)
-{
-    // Retrieve subdivision along with blocks and their houses
-    $subdivision = Subdivision::with(['blocks.houses'])->findOrFail($id);
+// public function show($id)
+// {
+//     // Retrieve subdivision along with blocks and their houses
+//     $subdivision = Subdivision::with(['blocks.houses'])->findOrFail($id);
 
-    // Extract blocks and map them with their houses
-    $blocks = $subdivision->blocks->map(function ($block) {
-        return (object) [
-            'block_id' => $block->id,  // Get block ID from the blocks table
-            'block_area' => $block->block_area ?? 'N/A',  // Get block area from blocks table
-            'houses' => $block->houses,  // Retrieve all houses for this block
-        ];
-    });
+//     // Extract blocks and map them with their houses
+//     $blocks = $subdivision->blocks->map(function ($block) {
+//         return (object) [
+//             'block_id' => $block->id,  // Get block ID from the blocks table
+//             'block_area' => $block->block_area ?? 'N/A',  // Get block area from blocks table
+//             'houses' => $block->houses,  // Retrieve all houses for this block
+//         ];
+//     });
 
-    return view('details', compact('subdivision', 'blocks'));
-}
+//     return view('details', compact('subdivision', 'blocks'));
+// }
 
 
 
@@ -130,11 +132,115 @@ public function details($id)
 
     return view('/details', compact('subdivision', 'blocks'));
 }
-public function Userindex()
+public function Adminindex()
 {
     $subdivisions = Subdivision::all();
-    return view('userSub', compact('subdivisions'));
+    return view('AdminSub', compact('subdivisions'));
+}
+// Edit Subdivision Functions
+public function edit($id)
+{
+    $subdivision = Subdivision::with('blocks.houses')->findOrFail($id);
+    return view('editsubdivision', compact('subdivision'));
 }
 
+public function update(Request $request, $id)
+{
+    $subdivision = Subdivision::findOrFail($id);
+
+    $request->validate([
+        'sub_name' => 'required|string|max:255',
+        'sub_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
+        'blocks.*.houses.*.house_area' => 'required|numeric',
+        'blocks.*.houses.*.house_price' => 'required|numeric|min:0',
+    ]);
+
+    $subdivision->sub_name = $request->sub_name;
+
+    if ($request->hasFile('sub_image')) {
+        $imagePath = $request->file('sub_image')->store('subdivision_images', 'public');
+        $subdivision->image = $imagePath;
+    }
+
+    $subdivision->save();
+
+    // Update blocks and houses
+    if ($request->blocks) {
+        foreach ($request->blocks as $blockId => $blockData) {
+            if (strpos($blockId, 'new_') === 0) {
+                // Create new block
+                $newBlock = Block::create([
+                    'subdivision_id' => $subdivision->id,
+                    'block_area' => $blockData['block_area'],
+                ]);
+
+                if (isset($blockData['houses'])) {
+                    foreach ($blockData['houses'] as $houseId => $houseData) {
+                        if (strpos($houseId, 'new_') === 0) {
+                            House::create([
+                                'subdivision_id' => $subdivision->id,
+                                'block_id' => $newBlock->id,
+                                'house_area' => $houseData['house_area'],
+                                'house_price' => $houseData['house_price'],
+                                'assigned_house_number' => $houseData['assigned_house_number'], // Corrected line
+                                'house_status' => $houseData['house_status'],
+                            ]);
+                        } else {
+                            //Update existing house
+                            $house = House::find($houseId);
+                            if($house){
+                                $house->update($houseData);
+                            }
+                        }
+                    }
+                }
+            } else {
+                // Update existing block
+                $block = Block::find($blockId);
+                if ($block) {
+                    $block->update(['block_area' => $blockData['block_area']]);
+
+                    if (isset($blockData['houses'])) {
+                        foreach ($blockData['houses'] as $houseId => $houseData) {
+                            if (strpos($houseId, 'new_') === 0) {
+                                House::create([
+                                    'subdivision_id' => $subdivision->id,
+                                    'block_id' => $block->id,
+                                    'house_area' => $houseData['house_area'],
+                                    'house_price' => $houseData['house_price'],
+                                    'assigned_house_number' => $houseData['assigned_house_number'], // Corrected line
+                                    'house_status' => $houseData['house_status'],
+                                ]);
+                            } else {
+                                $house = House::find($houseId);
+                                if($house){
+                                    $house->update($houseData);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return redirect()->route('subdivisions.index')->with('success', 'Subdivision updated successfully!');
 }
+public function destroy($id)
+{
+    $subdivision = Subdivision::findOrFail($id);
+
+    // Delete related houses (due to foreign key constraints)
+    $subdivision->houses()->delete();
+
+    // Delete related blocks (due to foreign key constraints)
+    $subdivision->blocks()->delete();
+
+    // Finally, delete the subdivision
+    $subdivision->delete();
+
+    return redirect()->route('subdivisions.index')->with('success', 'Subdivision deleted successfully!');
+}
+}
+
+
 

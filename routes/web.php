@@ -86,19 +86,19 @@ Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
 
 Route::get('/create_subdivision', [SubdivisionController::class, 'index']);
 Route::post('/subdivisions/store', [SubdivisionController::class, 'store'])->name('store_subdivision');
-Route::get('/subdivisions', [SubdivisionController::class, 'show'])->name('subdivision.show');
+// Route::get('/subdivisions', [SubdivisionController::class, 'show'])->name('subdivision.show');
 // contact_info
 Route::get('/contact', function () {
     return view('contact');
 });
-// User-facing subdivisions listing
-Route::get('/subdivisions', [SubdivisionController::class, 'Userindex'])->name('subdivisions.index');
+// Admin- side subdivisions listing
+Route::get('/subdivisions', [SubdivisionController::class, 'Adminindex'])->name('subdivisions.index');
 
-// User-facing subdivision details
+// Admin-facing subdivision details
 Route::get('/subdivisions/{subdivision}/details', [SubdivisionController::class, 'details'])->name('subdivisions.details');
 Route::get('/subdivisions/{id}', [SubdivisionController::class, 'show'])->name('subdivisions.show');
-// Route::get('/admin/houses/blocks/{subdivision}', [HouseController::class, 'blocks'])->name('admin.houses.blocks');
-// Route::get('/admin/houses/{subdivision}/{block}', [HouseController::class, 'edit'])->name('admin.houses.edit');
-// Route::get('/admin/houses/{house}/edit-form', [HouseController::class, 'editForm'])->name('admin.houses.edit-form');
-// Route::put('/admin/houses/{house}', [HouseController::class, 'update'])->name('admin.houses.update');
-// Route::get('/admin/houses', [HouseController::class, 'index'])->name('admin.houses.index');
+
+// Admin-facing subdivision edit
+Route::get('/subdivisions/edit/{id}', [SubdivisionController::class, 'edit'])->name('edit_subdivision');
+Route::put('/subdivisions/update/{id}', [SubdivisionController::class, 'update'])->name('update_subdivision');
+Route::delete('/subdivisions/delete/{id}', [SubdivisionController::class, 'destroy'])->name('delete_subdivision');
