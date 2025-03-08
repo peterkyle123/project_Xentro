@@ -9,6 +9,7 @@ use App\Http\Controllers\AboutUsAdminController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\SubdivisionController;
+use App\Http\Controllers\SubQueryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\HouseController;
@@ -97,7 +98,8 @@ Route::get('/subdivisions', [SubdivisionController::class, 'Adminindex'])->name(
 // Admin-facing subdivision details
 Route::get('/subdivisions/{subdivision}/details', [SubdivisionController::class, 'details'])->name('subdivisions.details');
 Route::get('/subdivisions/{id}', [SubdivisionController::class, 'show'])->name('subdivisions.show');
-
+// user- subdivision
+Route::get('/user/subdivisions', [SubdivisionController::class, 'showSubdivisions'])->name('Usersubdivisions.show');
 // Admin-facing subdivision edit
 Route::get('/subdivisions/edit/{id}', [SubdivisionController::class, 'edit'])->name('edit_subdivision');
 Route::put('/subdivisions/update/{id}', [SubdivisionController::class, 'update'])->name('update_subdivision');
@@ -105,4 +107,6 @@ Route::delete('/subdivisions/delete/{id}', [SubdivisionController::class, 'destr
 // BLOCKS AND HOUSES
 Route::delete('/block/{id}', [SubdivisionController::class, 'destroyBlock'])->name('destroyBlock');
 Route::delete('/house/{id}', [SubdivisionController::class, 'destroyHouse'])->name('destroyHouse');
-
+// Sub Query Routes
+Route::get('/sub-query', [SubQueryController::class, 'create'])->name('sub_queries.create');
+Route::post('/sub-queries', [SubQueryController::class, 'store'])->name('sub_queries.store');

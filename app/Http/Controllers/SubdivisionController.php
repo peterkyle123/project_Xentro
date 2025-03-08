@@ -21,6 +21,7 @@ class SubdivisionController extends Controller
     $request->validate([
         'sub_name'   => 'required|string|max:255',
         'sub_image'  => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
+        'plot'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
         'blocks.*.houses.*.house_area' => 'required|numeric',
         'blocks.*.houses.*.house_price' => 'required|numeric|min:0',
     ]);
@@ -28,6 +29,9 @@ class SubdivisionController extends Controller
     // Handle Image Upload
     $imagePath = $request->hasFile('sub_image')
         ? $request->file('sub_image')->store('subdivision_images', 'public')
+        : null;
+    $plotPath = $request->hasFile('plot')
+        ? $request->file('plot')->store('subdivision_plots', 'public')
         : null;
 
     $totalBlocks = is_array($request->blocks) ? count($request->blocks) : 0;
@@ -55,6 +59,7 @@ class SubdivisionController extends Controller
     $subdivision = Subdivision::create([
         'sub_name'     => $request->sub_name,
         'image'        => $imagePath,
+        'plot'         => $plotPath, // New field for the lot arrangement image
         'block_number' => $totalBlocks,
         'house_number' => 0, // Will be updated later
         'house_area'   => 0,
@@ -151,6 +156,7 @@ public function update(Request $request, $id)
     $request->validate([
         'sub_name' => 'required|string|max:255',
         'sub_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
+        'plot'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
         'blocks.*.houses.*.house_area' => 'required|numeric',
         'blocks.*.houses.*.house_price' => 'required|numeric|min:0',
     ]);
@@ -160,6 +166,12 @@ public function update(Request $request, $id)
     if ($request->hasFile('sub_image')) {
         $imagePath = $request->file('sub_image')->store('subdivision_images', 'public');
         $subdivision->image = $imagePath;
+    }
+
+    // Update plot image if a new file is provided
+    if ($request->hasFile('plot')) {
+        $plotPath = $request->file('plot')->store('subdivision_plots', 'public');
+        $subdivision->plot = $plotPath;
     }
 
     $subdivision->save();
@@ -297,7 +309,17 @@ public function destroyHouse($id)
 
     return redirect()->back()->with('success', 'House deleted successfully!');
 }
+// user-side
+public function showSubdivisions()
+{
+    // Retrieve all subdivisions from the database
+    $subdivisions = Subdivision::all();
+
+    // Return the view with the subdivisions data
+    return view('showsubdivision', compact('subdivisions'));
 }
+}
+
 
 
 

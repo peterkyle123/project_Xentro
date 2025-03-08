@@ -42,6 +42,14 @@
         <img src="{{ asset('storage/' . $subdivision->image) }}" alt="Current Subdivision Image" class="mt-2 max-w-xs">
       @endif
     </div>
+       <!-- Plot Image Field -->
+       <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2">Plot Image</label>
+        <input type="file" name="plot" class="w-full border rounded py-2 px-3" accept="image/*">
+        @if ($subdivision->plot)
+          <img src="{{ asset('storage/' . $subdivision->plot) }}" alt="Current Plot Image" class="mt-2 max-w-xs">
+        @endif
+      </div>
 
     <!-- Blocks Section -->
     <div id="blocks-container" class="mb-4">

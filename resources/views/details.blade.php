@@ -9,15 +9,28 @@
 <body class="p-4">
     <h1 class="text-3xl font-bold mb-4">{{ $subdivision->sub_name }}</h1>
 
-    @if ($subdivision->image)
-        <img src="{{ asset('storage/' . $subdivision->image) }}"
-             alt="{{ $subdivision->sub_name }} Image"
-             class="w-full h-64 object-cover rounded-lg mb-4">
-    @else
-        <p class="text-gray-500 italic">No image available</p>
-    @endif
-
-    <div>
+    <div class="flex flex-col md:flex-row gap-4">
+        <div class="w-full md:w-1/2">
+          @if ($subdivision->image)
+            <div class="bg-white rounded-lg overflow-hidden shadow">
+              <img src="{{ asset('storage/' . $subdivision->image) }}"
+                   alt="{{ $subdivision->sub_name }} Image"
+                   class="w-full h-64 object-contain">
+            </div>
+          @else
+            <p class="text-gray-500 italic">No image available</p>
+          @endif
+        </div>
+        <div class="w-full md:w-1/2">
+          @if ($subdivision->plot)
+            <div class="bg-white rounded-lg overflow-hidden shadow">
+              <img src="{{ asset('storage/' . $subdivision->plot) }}"
+                   alt="Subdivision Plot"
+                   class="w-full h-64 object-contain">
+            </div>
+          @endif
+        </div>
+      </div>
         <h2 class="text-xl font-semibold mb-2">Blocks & Houses</h2>
 
         @if ($blocks->isNotEmpty())

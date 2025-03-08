@@ -39,6 +39,11 @@
         <input type="file" name="sub_image" class="w-full border rounded py-2 px-3" accept="image/*" required>
       </div>
 
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2">Subdivision Plot</label>
+        <input type="file" name="plot" class="w-full border rounded py-2 px-3" accept="image/*" required>
+      </div>
+
       <!-- Blocks Section (user adds blocks and houses, but block number is auto-assigned) -->
       <div id="blocks-container" class="mb-4">
         <h2 class="text-xl font-semibold">Blocks</h2>
