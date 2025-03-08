@@ -8,8 +8,11 @@
 </head>
 <body class="p-4">
     <h1 class="text-2xl font-bold mb-4">Subdivisions</h1>
-
+    <a href="/create_subdivision" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded mb-4 inline-block">
+        Create Subdivision
+    </a>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
         @foreach($subdivisions as $subdivision)
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <img src="{{ asset('storage/' . $subdivision->image) }}" alt="Subdivision Image" class="w-full h-48 object-cover">

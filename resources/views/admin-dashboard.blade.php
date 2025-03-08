@@ -25,6 +25,7 @@
         <a href="/create-team" class="hover:text-orange-950">Team</a>
         <a href="/admin/listings" class="hover:text-orange-950">Listings</a>
         <a href="/admin/inquiries" class="hover:text-orange-950">Inquiries</a>
+        <a href="/subdivisions" class="hover:text-orange-950">Subdivision</a>
         <a href="/admin-edit" class="hover:text-orange-950">Account</a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf

@@ -24,7 +24,7 @@
                 <a href="user-listings1" class="text-gray-700 hover:text-orange-500 transition duration-300">Properties</a>
                 <a href="/about" class="text-gray-700 hover:text-orange-500 transition duration-300">About Us</a>
                 <a href="/contact" class="text-gray-700 hover:text-orange-500 transition duration-300">Contact</a>
-                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Subdivisions</a>
+                <a href="/user/subdivisions" class="text-gray-700 hover:text-orange-500 transition duration-300">Subdivisions</a>
             </nav>
 
             <!-- Mobile Menu Button -->
@@ -41,6 +41,7 @@
             <a href="user-listings1" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Properties</a>
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">About Us</a>
             <a href="/contact" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>
+            <a href="/user/subdivisions" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Subdivisions</a>
         </div>
     </header>
     <section class="relative h-[600px] bg-cover bg-center" style="background-image: url({{ asset('images/home.jpg') }});">
