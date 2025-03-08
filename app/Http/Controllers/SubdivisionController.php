@@ -172,6 +172,7 @@ public function update(Request $request, $id)
                 $newBlock = Block::create([
                     'subdivision_id' => $subdivision->id,
                     'block_area' => $blockData['block_area'],
+
                 ]);
 
                 if (isset($blockData['houses'])) {
@@ -221,6 +222,15 @@ public function update(Request $request, $id)
                     }
                 }
             }
+            // After processing blocks and houses:
+$totalBlocks = Block::where('subdivision_id', $subdivision->id)->count();
+$totalHouses = House::where('subdivision_id', $subdivision->id)->count();
+
+$subdivision->update([
+    'block_number' => $totalBlocks,
+    'house_number' => $totalHouses,
+]);
+
         }
     }
     return redirect()->route('subdivisions.index')->with('success', 'Subdivision updated successfully!');
@@ -239,6 +249,25 @@ public function destroy($id)
     $subdivision->delete();
 
     return redirect()->route('subdivisions.index')->with('success', 'Subdivision deleted successfully!');
+}
+public function destroyBlock($id)
+{
+    $block = Block::findOrFail($id);
+
+    // Delete related houses first
+    $block->houses()->delete();
+
+    $block->delete();
+
+    return redirect()->back()->with('success', 'Block deleted successfully!');
+}
+
+public function destroyHouse($id)
+{
+    $house = House::findOrFail($id);
+    $house->delete();
+
+    return redirect()->back()->with('success', 'House deleted successfully!');
 }
 }
 
