@@ -24,6 +24,7 @@ class SubdivisionController extends Controller
         'plot'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
         'blocks.*.houses.*.house_area' => 'required|numeric',
         'blocks.*.houses.*.house_price' => 'required|numeric|min:0',
+        'location'   => 'required|string|max:255',
     ]);
 
     // Handle Image Upload
@@ -63,7 +64,9 @@ class SubdivisionController extends Controller
         'block_number' => $totalBlocks,
         'house_number' => 0, // Will be updated later
         'house_area'   => 0,
-        'house_status' => 'Available'
+        'house_status' => 'Available',
+        'location'     => $request->location,
+        'description'  => $request->description ?? '', // Ensure a value is always provided
     ]);
 
     $totalHouses = 0;
@@ -159,9 +162,13 @@ public function update(Request $request, $id)
         'plot'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000',
         'blocks.*.houses.*.house_area' => 'required|numeric',
         'blocks.*.houses.*.house_price' => 'required|numeric|min:0',
+        'location' => 'required|string|max:255',
+        'description' => 'nullable|string', // Add this validation rule
     ]);
 
     $subdivision->sub_name = $request->sub_name;
+    $subdivision->location = $request->location; // Update location
+    $subdivision->description = $request->description ?? ''; // Ensure description is set
 
     if ($request->hasFile('sub_image')) {
         $imagePath = $request->file('sub_image')->store('subdivision_images', 'public');

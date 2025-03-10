@@ -11,7 +11,7 @@ class Subdivision extends Model
 
     protected $table = 'ngh'; // Explicitly setting the table name
 
-    protected $fillable = ['sub_name', 'image','plot', 'block_number', 'house_number', 'house_area', 'house_status'];
+    protected $fillable = ['sub_name', 'image','plot', 'block_number', 'house_number', 'house_area', 'house_status','location','description'];
 
 
     // Relationship: One Subdivision has Many Houses

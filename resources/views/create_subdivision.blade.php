@@ -35,6 +35,16 @@
       </div>
 
       <div class="mb-4">
+        <label class="text-gray-700 font-bold mb-2">Description</label>
+        <input type="text" name="description" class="w-full border rounded py-2 px-3" required>
+      </div>
+
+      <div class="mb-4">
+        <label class="text-gray-700 font-bold mb-2">Location</label>
+        <input type="text" name="location" class="w-full border rounded py-2 px-3" required>
+      </div>
+
+      <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2">Subdivision Image</label>
         <input type="file" name="sub_image" class="w-full border rounded py-2 px-3" accept="image/*" required>
       </div>
