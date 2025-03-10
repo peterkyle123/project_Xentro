@@ -23,5 +23,8 @@ class Subdivision extends Model
     {
         return $this->hasMany(Block::class);
     }
+       public function amenities() {
+        return $this->hasMany(Amenity::class, 'subdivision_id');
+    }
 }
 

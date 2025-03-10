@@ -2,6 +2,7 @@
 
 use App\Models\Listing;
 use App\Models\Team;
+use App\Models\Subdivision;
 use App\Http\Controllers\ListingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -81,7 +82,8 @@ Route::get('/create-team', [TeamController::class, 'create'])->name('team.create
 Route::post('/store-team', [TeamController::class, 'store'])->name('team.store');
 // NGH blade
 Route::get('/ngh-subdivision', function () {
-    return view('NGH_sud');
+    $subdivisions = Subdivision::all(); // Fetch all subdivisions from the database
+    return view('NGH_sud', compact('subdivisions'));
 });
 Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Block;
+use App\Models\Amenity;
 use Illuminate\Http\Request;
 use App\Models\Subdivision;
 use App\Models\House;
@@ -68,6 +69,14 @@ class SubdivisionController extends Controller
         'location'     => $request->location,
         'description'  => $request->description ?? '', // Ensure a value is always provided
     ]);
+    $amenities = explode(',', $request->amenities);
+    foreach ($amenities as $amenity) {
+        Amenity::create([
+            'subdivision_id' => $subdivision->id,
+            'name' => trim($amenity),
+        ]);
+    }
+
 
     $totalHouses = 0;
 
