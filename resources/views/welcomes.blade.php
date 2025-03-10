@@ -9,7 +9,7 @@
 </head>
  <!-- Header -->
  <body class="bg-gray-100">
- <header class="bg-white shadow-md relative">
+ <header class="bg-white shadow-md fixed w-full z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <!-- Logo -->
             <a href="/" class="flex items-center space-x-2">
@@ -39,7 +39,7 @@
         <div id="mobile-menu" class="hidden flex flex-col bg-white shadow-md absolute w-full left-0 top-full z-50">
             <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Home</a>
             <a href="user-listings1" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Properties</a>
-            <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">About Us</a>
+            <a href="/about" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">About Us</a>
             <a href="/contact" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>
             <a href="/user/subdivisions" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Subdivisions</a>
         </div>
@@ -50,7 +50,8 @@
         <div class="relative z-10 text-center text-white flex flex-col justify-center items-center h-full">
             <h1 class="text-4xl md:text-6xl font-bold mb-4">Find Your Dream Home</h1>
             <p class="text-lg mb-8">Discover a wide range of properties to suit your needs.</p>
-            <a href="user-listings1" class="bg-transparent border border-white text-white hover:bg-black font-semibold py-3 px-8 rounded-full transition duration-300">Browse Properties</a>
+            <a href="/user/subdivisions" class="bg-transparent border border-white text-white hover:bg-black font-semibold py-3 px-8 rounded-full transition duration-300">Check Subvivisions</a>
+            <a href="user-listings1" class="bg-transparent border border-white text-white hover:bg-black font-semibold py-3 px-8 rounded-full transition duration-300 mt-4">Browse Properties</a>
         </div>
     </section>
 

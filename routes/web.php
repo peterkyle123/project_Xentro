@@ -112,3 +112,6 @@ Route::delete('/house/{id}', [SubdivisionController::class, 'destroyHouse'])->na
 // Sub Query Routes
 Route::get('/sub-query', [SubQueryController::class, 'create'])->name('sub_queries.create');
 Route::post('/sub-queries', [SubQueryController::class, 'store'])->name('sub_queries.store');
+
+Route::get('/admin/queries', [SubQueryController::class, 'index'])->name('admin.queries.index');
+Route::delete('/admin/queries/{id}', [SubQueryController::class, 'destroy'])->name('queries.destroy');

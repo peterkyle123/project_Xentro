@@ -8,7 +8,35 @@
     @vite('resources/js/app.js')
 </head>
 <body class="bg-gray-100">
-    <div class="container mx-auto p-8 max-w-5xl">
+    <header class="bg-white shadow-md fixed w-full z-50 top-0">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-2">
+                <img src="{{ asset('images/XENTRO ESTATES.jfif') }}" alt="Xentro Estates Logo" class="w-20 h-10 object-cover">
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">Home</a>
+                <a href="#" class="text-gray-700 hover:text-orange-500 transition duration-300">NGH Subdivision</a>
+                <a href="user-listings1" class="text-gray-700 hover:text-orange-500 transition duration-300">Properties</a>
+                <a href="/about" class="text-gray-700 hover:text-orange-500 transition duration-300">About Us</a>
+                <a href="/contact" class="text-gray-700 hover:text-orange-500 transition duration-300">Contact</a>
+                <a href="/user/subdivisions" class="text-gray-700 hover:text-orange-500 transition duration-300">Subdivisions</a>
+            </nav>
+            <button id="menu-toggle" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden bg-white shadow-md absolute w-full left-0 top-16 z-50">
+            <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Home</a>
+            <a href="user-listings1" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Properties</a>
+            <a href="/about" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">About Us</a>
+            <a href="/contact" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Contact</a>
+            <a href="/user/subdivisions" class="block py-3 px-4 text-gray-700 hover:bg-gray-100">Subdivisions</a>
+        </div>
+    </header>
+    <div class="container mx-auto p-8 max-w-5xl mt-20">
         <div class="text-center mb-10">
             <h1 class="text-4xl font-extrabold text-gray-800">Xentro Company</h1>
             <p class="mt-2 text-lg text-gray-600">A real estate development company in the Visayas. That aims to establish itself as a trusted developer, strive to shape the future of real estate development, and become a trusted partner for those seeking quality properties in the region.</p>
@@ -54,7 +82,7 @@
         </div>
 
         <!-- Our Team Section -->
-        <div class="bg-white p-6 rounded-xl shadow-lg mb-8"> 
+        <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
             <h2 class="text-2xl font-semibold text-gray-700">Our Team</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 @foreach($teamMembers as $member)
@@ -83,40 +111,21 @@
         </div>
     </div>
 </div>
+
+
     <script>
-    const slider = document.getElementById('gallery');
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-    slider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        slider.classList.add('active');
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        isDown = false;
-        slider.classList.remove('active');
-    });
-
-    slider.addEventListener('mouseup', () => {
-        isDown = false;
-        slider.classList.remove('active');
-    });
-
-    slider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2; // Adjust scroll speed
-        slider.scrollLeft = scrollLeft - walk;
-    });
-
-    // Hide scrollbar (Tailwind utility)
-    document.styleSheets[0].insertRule('.scrollbar-hide::-webkit-scrollbar { display: none; }', 0);
-    document.styleSheets[0].insertRule('.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }', 0);
-</script>
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            } else {
+                console.error('Menu toggle button or mobile menu not found');
+            }
+        });
+    </script>
 </body>
 </html>

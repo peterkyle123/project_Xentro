@@ -90,21 +90,21 @@
   </style>
 </head>
 <body>
-  <header class="header">
-  </header>
-  <div class="content-wrapper">
-    <h1 class="text-2xl font-bold mb-4">Subdivisions</h1>
-    <div class="option-container">
-      @foreach ($subdivisions as $subdivision)
-        <a href="#" class="option" style="background-image: url('{{ asset('storage/' . $subdivision->image) }}');">
-          <div class="option-text">{{ $subdivision->sub_name }}</div>
-          <div class="description-text">
-            <p><strong>Blocks:</strong> {{ $subdivision->block_number }}</p>
-            <p><strong>Houses:</strong> {{ $subdivision->house_number }}</p>
-          </div>
-        </a>
-      @endforeach
+    <header class="header">
+        </header>
+    <div class="content-wrapper">
+        <h1 class="text-2xl font-bold mb-4">Subdivisions</h1>
+        <div class="option-container">
+            @foreach ($subdivisions as $subdivision)
+                <a href="{{ route('sub_queries.create', ['subdivision_id' => $subdivision->id]) }}" class="option" style="background-image: url('{{ asset('storage/' . $subdivision->image) }}');">
+                    <div class="option-text">{{ $subdivision->sub_name }}</div>
+                    <div class="description-text">
+                        <p><strong>Blocks:</strong> {{ $subdivision->block_number }}</p>
+                        <p><strong>Houses:</strong> {{ $subdivision->house_number }}</p>
+                    </div>
+                </a>
+            @endforeach
+        </div>
     </div>
-  </div>
 </body>
 </html>

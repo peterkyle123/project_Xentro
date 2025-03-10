@@ -19,5 +19,7 @@ class SubQuery extends Model
         'email',
         'purpose',
         'lot',
+        'address',
+        'block',
     ];
 }

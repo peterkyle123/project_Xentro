@@ -39,7 +39,7 @@ class ListingController extends Controller
             'contact_phone',
             'is_featured',
             'likes',
-        
+
 
         );
 
@@ -82,8 +82,8 @@ class ListingController extends Controller
         $listings = $listings->paginate(6);
 
         return view('listings', compact('listings'));
-    
-        
+
+
     }
 
     public function create()
@@ -95,7 +95,7 @@ class ListingController extends Controller
     }
     public function store(Request $request)
     {
-        
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -112,12 +112,12 @@ class ListingController extends Controller
             'bathrooms' => 'nullable|numeric|min:0',
             'area' => 'nullable|numeric|min:0',
             'status' => 'required|string|max:50',
-            'image' => 'required|image|max:5000', 
+            'image' => 'required|image|max:5000',
             'latitude' => 'nullable|numeric', // Added validation for latitude
             'longitude' => 'nullable|numeric',
             'contact_name' => 'required|string|max:255', // Added validation
             'contact_email' => 'required|email|max:255', // Added validation
-            'contact_phone' => 'nullable|string|max:20', 
+            'contact_phone' => 'nullable|string|max:20',
         ]);
 
 
@@ -128,10 +128,10 @@ class ListingController extends Controller
         // Check if the image file is present in the request
         if ($request->hasFile('image')) {
             // dd($request->file('image')); // Uncomment this for debugging to inspect the file
-            
+
             // Store the image in the 'public/images' folder under the 'public' disk
             $imagePath = $request->file('image')->store('images', 'public');
-            
+
             // Store the image path (relative to the public disk)
             $validatedData['image'] = $imagePath;
         }
@@ -139,7 +139,7 @@ class ListingController extends Controller
             $validatedData['likes'] = 0; // Initialize likes to 0
             $validatedData['liked_sessions'] = json_encode([]); // Initialize liked_sessions as an empty JSON array
         Listing::create($validatedData);
-    
+
         return redirect()->route('admin.listings.index')->with('success', 'Listing created successfully.');
     }
 
@@ -189,17 +189,18 @@ class ListingController extends Controller
             if ($request->housing_type !== 'Other') {
                 $validatedData['custom_housing_type'] = null;
             }
-           // Handle image upload only if a new image is provided
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($listing->image) {
-                Storage::disk('public')->delete($listing->image);
-            }
+            if ($request->hasFile('image')) {
+                // Delete old image if it exists
+                if ($listing->image) {
+                    Storage::disk('public')->delete($listing->image);
+                }
 
-        $imagePath = $request->file('image')->store('listings', 'public');
-        $listing->image = $imagePath;
-        $listing->save(); // Save the listing again to store the image path
-    }
+                // Store new image
+                $imagePath = $request->file('image')->store('listings', 'public');
+
+                // Add to validated data array
+                $validatedData['image'] = $imagePath;
+            }
         $listing->update($validatedData);
 
         return redirect()->route('admin.listings.index')->with('success', 'Listing updated successfully.');
