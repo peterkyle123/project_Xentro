@@ -23,7 +23,7 @@
                         <span class="font-medium">Blocks:</span> {{ $subdivision->block_number }}
                     </p>
                     <p class="text-gray-600">
-                        <span class="font-medium">Houses:</span> {{ $subdivision->house_number }}
+                        <span class="font-medium">Lots:</span> {{ $subdivision->house_number }}
                     </p>
                     <a href="{{ route('subdivisions.details', $subdivision) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block">
                         View Details
