@@ -11,10 +11,19 @@
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-semibold mb-4">Submit Your Query</h1>
 
+        <!-- Success Message -->
         @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
                 <strong class="font-bold">Success!</strong>
                 <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        @endif
+
+        <!-- Error Message (Non-Modal Version for Consistency) -->
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">{{ session('error') }}</span>
             </div>
         @endif
 
@@ -26,7 +35,7 @@
 
         <form action="{{ route('sub_queries.store') }}" method="POST">
             @csrf
-            <input type="hidden" name="subdivision_id" value="{{ request('subdivision_id') }}">
+            <input type="hidden" name="subdivision_id" value="{{ $subdivision->id }}"> <!-- Ensure this is correct -->
 
             <div class="mb-4">
                 <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
@@ -54,7 +63,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="lot" class="block text-gray-700 text-sm font-bold mb-2">Interested at Block</label>
+                <label for="block" class="block text-gray-700 text-sm font-bold mb-2">Interested at Block</label>
                 <input type="text" name="block" id="block" class="w-full border rounded py-2 px-3" required>
             </div>
 
@@ -69,18 +78,16 @@
         </form>
     </div>
 
-  <script>
-    // Ensure that the phone number field accepts only numeric input (up to 11 digits)
-    document.getElementById('phone_number').addEventListener('input', function(event) {
-      let inputValue = event.target.value;
-      // Remove non-numeric characters
-      let numericValue = inputValue.replace(/\D/g, '');
-      // Limit to 11 digits
-      if (numericValue.length > 11) {
-        numericValue = numericValue.slice(0, 11);
-      }
-      event.target.value = numericValue;
-    });
-  </script>
+    <script>
+        // Ensure the phone number field accepts only numeric input (up to 11 digits)
+        document.getElementById('phone_number').addEventListener('input', function(event) {
+            let inputValue = event.target.value;
+            let numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
+            if (numericValue.length > 11) {
+                numericValue = numericValue.slice(0, 11); // Limit to 11 digits
+            }
+            event.target.value = numericValue;
+        });
+    </script>
 </body>
 </html>

@@ -50,11 +50,12 @@
                 <strong class="block font-medium">Social Media:</strong>
             </div>
             <div class="flex space-x-4">
-                <a href="https://www.facebook.com/example" class="text-blue-500 hover:underline"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="https://www.facebook.com/profile.php?id=61555322596825" class="text-blue-500 hover:underline"><i class="fab fa-facebook-f"></i> Facebook</a>
                 <a href="https://www.twitter.com/example" class="text-blue-500 hover:underline"><i class="fab fa-twitter"></i> Twitter</a>
                 <a href="https://www.instagram.com/example" class="text-blue-500 hover:underline"><i class="fab fa-instagram"></i> Instagram</a>
             </div>
         </div>
     </div>
+
 </body>
 </html>

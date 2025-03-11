@@ -21,5 +21,12 @@ class SubQuery extends Model
         'lot',
         'address',
         'block',
+        'subdivision_id'
+
     ];
+    public function subdivision()
+{
+    return $this->belongsTo(Subdivision::class, 'subdivision_id');
+}
+
 }

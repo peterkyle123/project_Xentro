@@ -334,6 +334,15 @@ public function showSubdivisions()
     // Return the view with the subdivisions data
     return view('showsubdivision', compact('subdivisions'));
 }
+public function show($subdivision_id)
+{
+    // Fetch the subdivision or return a 404 error if not found
+    $subdivision = Subdivision::findOrFail($subdivision_id);
+
+    // Return the view with the subdivision data
+    return view('NGH_sud', compact('subdivision'));
+}
+
 }
 
 

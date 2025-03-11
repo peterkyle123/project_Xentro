@@ -42,6 +42,15 @@
             <p class="mt-2 text-lg text-gray-600">A real estate development company in the Visayas. That aims to establish itself as a trusted developer, strive to shape the future of real estate development, and become a trusted partner for those seeking quality properties in the region.</p>
         </div>
 
+        <div class="flex justify-center items-center">
+            <video width="640" height="360" controls>
+                <source src="{{ Storage::url('videos/fast.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+
+
         <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
             <h2 class="text-2xl font-semibold text-gray-700">Our Mission</h2>
             <p class="text-gray-600 mt-2">

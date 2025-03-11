@@ -96,13 +96,16 @@
         <h1 class="text-2xl font-bold mb-4">Subdivisions</h1>
         <div class="option-container">
             @foreach ($subdivisions as $subdivision)
-                <a href="{{ route('sub_queries.create', ['subdivision_id' => $subdivision->id]) }}" class="option" style="background-image: url('{{ asset('storage/' . $subdivision->image) }}');">
-                    <div class="option-text">{{ $subdivision->sub_name }}</div>
-                    <div class="description-text">
-                        <p><strong>Blocks:</strong> {{ $subdivision->block_number }}</p>
-                        <p><strong>Houses:</strong> {{ $subdivision->house_number }}</p>
-                    </div>
-                </a>
+            <a href="{{ route('subdivision.show', ['subdivision_id' => $subdivision->id]) }}"
+                class="option"
+                style="background-image: url('{{ asset('storage/' . $subdivision->image) }}');">
+                 <div class="option-text">{{ $subdivision->sub_name }}</div>
+                 <div class="description-text">
+                     <p><strong>Blocks:</strong> {{ $subdivision->block_number }}</p>
+                     <p><strong>Houses:</strong> {{ $subdivision->house_number }}</p>
+                 </div>
+             </a>
+
             @endforeach
         </div>
     </div>

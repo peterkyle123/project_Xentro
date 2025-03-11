@@ -81,10 +81,10 @@ Route::get('/about', function () {
 Route::get('/create-team', [TeamController::class, 'create'])->name('team.create');
 Route::post('/store-team', [TeamController::class, 'store'])->name('team.store');
 // NGH blade
-Route::get('/ngh-subdivision', function () {
-    $subdivisions = Subdivision::all(); // Fetch all subdivisions from the database
-    return view('NGH_sud', compact('subdivisions'));
-});
+// 2️⃣ Second Page: Show Single Subdivision Details
+Route::get('/ngh-subdivision/{subdivision_id}', [SubdivisionController::class, 'show'])
+    ->name('subdivision.show');
+
 Route::get('/team/{id}', [TeamController::class, 'show'])->name('team.show');
 
 Route::get('/create_subdivision', [SubdivisionController::class, 'index']);
@@ -110,7 +110,8 @@ Route::delete('/subdivisions/delete/{id}', [SubdivisionController::class, 'destr
 Route::delete('/block/{id}', [SubdivisionController::class, 'destroyBlock'])->name('destroyBlock');
 Route::delete('/house/{id}', [SubdivisionController::class, 'destroyHouse'])->name('destroyHouse');
 // Sub Query Routes
-Route::get('/sub-query', [SubQueryController::class, 'create'])->name('sub_queries.create');
+Route::get('/sub-query/{subdivision_id}', [SubQueryController::class, 'create'])
+    ->name('sub_queries.create');
 Route::post('/sub-queries', [SubQueryController::class, 'store'])->name('sub_queries.store');
 
 Route::get('/admin/queries', [SubQueryController::class, 'index'])->name('admin.queries.index');

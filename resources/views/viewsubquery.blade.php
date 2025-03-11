@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-semibold mb-6 text-gray-800">User Queries</h1>
+        <h1 class="text-3xl font-semibold mb-6 text-gray-800">Subdivision Inqueries</h1>
 
         @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -27,9 +27,10 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subdivision</th> <!-- New Column -->
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lot</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Block</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Interested at Lot</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">In Block</th>
                         <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
@@ -40,6 +41,10 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $query->email }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $query->phone_number }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $query->address }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                {{ optional($query->subdivision)->sub_name ?? 'N/A' }}
+                            </td>
+
                             <td class="px-6 py-4">{{ $query->purpose }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $query->lot }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $query->block }}</td>
